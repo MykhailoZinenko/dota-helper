@@ -1,0 +1,340 @@
+body {
+    font-family: 'Space Grotesk', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    letter-spacing: 1px;
+    color: #E0E5E8;
+    display: grid;
+    grid-template-areas:
+        "navbar"
+        "profile"
+        "main"
+        "footer";
+    grid-template-rows: 70px 250px 1fr 130px;
+    grid-template-columns: 100%;
+    min-height: 100vh;
+    margin: 0;
+    background-color: rgb(25, 32, 35);
+    background-image: linear-gradient(to right, rgb(26, 43, 62), rgb(20, 30, 48));
+}
+
+._text-muted {
+    color: #899AA5;
+}
+
+._text-info {
+    color: #E0E5E8;
+}
+
+._text-danger {
+    color: #F14A4B;
+}
+
+._text-succes {
+    color: #66BB6A;
+}
+
+._text-gold {
+    color: #C9AF1D;
+}
+
+.navbar {
+    grid-area: navbar;
+    z-index: 4444;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    box-shadow: rgb(0 0 0 / 23%) 2px 2px 3px -2px;
+}
+
+.navbar_bg-dark {
+    background-color: #16405A;
+}
+
+.navbar__toggler {
+    display: none;
+}
+
+.navbar__logo {
+    padding-top: 0.2rem;
+}
+
+.navbar__link {
+    text-decoration: none;
+    margin-left: 3rem;
+    font-size: 20px;
+}
+
+.navbar__link_text-info {
+    color: #FFF;
+}
+
+.profile-info {
+    grid-area: profile;
+    background-color: #15394F;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: rgb(0 0 0 / 23%) 2px 2px 3px -2px;
+}
+
+.profile-info__logo {
+    width: 124px;
+    height: 124px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.profile-content {
+    width: 35%;
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    padding: 2.5rem;
+    height: -webkit-fill-available;
+}
+
+.profile-buttons {
+    display: flex;
+    justify-content: left;
+}
+
+.profile-buttons__title {
+    font-size: 25px;
+    line-height: 26px;
+    padding-right: 1rem;
+}
+
+.profile-buttons__picture {
+    width: 25px;
+    background-color: gray;
+}
+
+.stats {
+    padding-top: 1.5rem;
+    display: flex;
+    justify-content: left;
+}
+
+
+.stats__container {
+    padding: 0.5rem;
+    padding-left: 0;
+    padding-right: 1.5rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.stats__container_text-muted {
+    color: #899AA5;
+    font-size: 14px;
+}
+
+.stats__container_text-succes {
+    color: #66BB6A;
+    font-size: 24px;
+}
+
+.stats__container_text-danger {
+    color: #F14A4B;
+    font-size: 24px;
+}
+
+.stats__container_text-info {
+    color: #E0E5E8;
+    font-size: 24px;
+}
+
+.profile-info__rank {
+    width: 124px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.main-content {
+    grid-area: main;
+    /* background-color: red; */
+    padding: 1rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    padding-top: 0;
+}
+
+.main-content h2 {
+    text-align: center;
+    padding: 1rem;
+}
+
+.recently-played {
+    background-color: rgba(255, 255, 255, 0.03);
+    padding: 1rem;
+    display: flex;
+    justify-content: center;
+}
+
+.recent-matches-list {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.recent-matches-list__item {
+    list-style: none;
+    display: inline-block;
+    margin-bottom: 10px;
+    margin-right: 15px;
+    display: inline-block;
+}
+
+.recent-matches-list__item span {
+    font-size: 14px;
+}
+
+.recent-matches-list__item p {
+    font-size: 24px;
+    margin: 0px;
+    padding-top: 0.5rem;
+}
+
+.matches-table {
+    width: 100%;
+    padding: 1rem;
+    border-collapse: collapse;
+}
+
+.matches-table thead {
+    border-bottom: 2px solid white;
+}
+
+.matches-table th {
+    padding-bottom: 0.5rem;
+}
+
+.matches-table__td {
+    padding: 0.5rem;
+    text-align: center;
+    border-bottom: 1px dotted white;
+}
+
+.team {
+    display: flex;
+    justify-content: center;
+}
+
+.team img {
+    padding: 2px;
+    width: 24px;
+    height: 24px;
+}
+
+.player-hero {
+    filter: drop-shadow(rgb(255, 255, 255) 1px 0 0px) drop-shadow(rgb(255, 255, 255) -1px 0 0px) drop-shadow(rgb(255, 255, 255) 0 1px 0px) drop-shadow(rgb(255, 255, 255) 0 -1px 0px);
+}
+
+
+.matches-table__tr-end {
+    border-bottom: 2px solid white;
+}
+
+
+.heroes-table {
+    width: 100%;
+    padding: 1rem;
+    border-collapse: collapse;
+}
+
+.heroes-table thead {
+    border-bottom: 2px solid white;
+} 
+
+.heroes-table th {
+    padding-bottom: 0.5rem;
+}
+
+.heroes-table td {
+    padding: 0.5rem;
+    text-align: center;
+    border-bottom: 1px dotted white;
+}
+
+.heroes-table__tr-end {
+    border-bottom: 2px solid white;
+}
+
+.footer {
+    grid-area: footer;
+    background-color: #0D1520;
+    padding: 1rem;
+    padding-top: 1.5rem;
+}
+
+.footer__contact {
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    padding-bottom: 0.5rem;
+}
+
+.footer__contact img {
+    padding-bottom: 0.2rem;
+}
+
+.footer__contact span {
+    padding-left: 2rem;
+}
+
+.footer__about {
+    padding-left: 3rem;
+}
+
+.footer__pages {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.footer__pages a {
+    text-decoration: none;
+}
+
+.footer__pages .divider {
+    opacity: 0.6;
+    
+}
+
+@media (max-width: 768px) {
+    body {
+        display: grid;
+        grid-template-areas:
+            "navbar profile"
+            "navbar main"
+            "navbar main"
+            "navbar footer";
+        grid-template-rows: 3fr 3fr 3fr 1fr;
+        grid-template-columns: 70px 1fr;
+        min-height: 100vh;
+        margin: 0;
+    }
+
+    .navbar {
+        grid-area: navbar;
+        display: flex;
+        flex-direction: column;
+        justify-content: left;
+        padding-top: 1rem;
+    }
+
+    .navbar__toggler {
+        display: block;
+    }
+
+    .navbar__link,
+    .navbar__logo {
+        display: none;
+    }
+}

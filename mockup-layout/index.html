@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <nav class="navbar navbar_bg-dark">
+        <button class="navbar__toggler">--</button>
+        <div class="navbar__logo"><img src="/image/logo-removed-bg.png" alt="" width="120px" height="30px"></div>
+        <a id="profile" class="navbar__link navbar__link_text-info" href="">Profile</a>
+        <a id="matches" class="navbar__link navbar__link_text-info" href="">Matches</a>
+        <a id="heroes" class="navbar__link navbar__link_text-info" href="">Heroes</a>
+        <a id="statistics" class="navbar__link navbar__link_text-info" href="">Statistics</a>
+    </nav>
+
+    <div class="profile-info">
+        <div class="profile-info__logo"><img src="/image/profile-logo.jpg" height="124px" width="124px">
+        </div>
+        <div class="profile-info__content profile-content">
+            <div class="profile-content__buttons profile-buttons">
+                <a class="profile-buttons__title">Misha</a>
+                <a class="profile-buttons__picture"><img src="" alt=""></a>
+            </div>
+            <div class="profile-info__stats stats">
+                <div class="stats__container">
+                    <span class="stats__container_text-muted">
+                        WINS
+                    </span>
+                    <span class="stats__container_text-succes">
+                        246
+                    </span>
+                </div>
+                <div class="stats__container">
+                    <span class="stats__container_text-muted">
+                        LOSES
+                    </span>
+                    <span class="stats__container_text-danger">
+                        216
+                    </span>
+                </div>
+                <div class="stats__container">
+                    <span class="stats__container_text-muted">
+                        WIN RATE
+                    </span>
+                    <span class="stats__container_text-info">
+                        53.25%
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="profile-info__rank"><img src="/image/rank_image-removebg-preview.png" alt=""
+                height="124px" width="124px"></div>
+    </div>
+
+    <div class="main-content">
+        <h2>Stats of recently played matches (avg/max)</h2>
+        <div class="main-content__recently-played recently-played">
+            <ul class="recently-played__list recent-matches-list">
+                <li class="recent-matches-list__item ">
+                    <span class="_text-muted">
+                        WINRATE
+                    </span>
+                    <p>
+                        60%
+                    </p>
+                </li>
+                <li class="recent-matches-list__item ">
+                    <span class="_text-muted">
+                        KILLS
+                    </span>
+                    <p class="_text-succes">
+                        9
+                        <span class="_text-muted">17</span>
+                        <img src="" alt="">
+                    </p>
+                </li>
+                <li class="recent-matches-list__item ">
+                    <span class="_text-muted">
+                        DEATHES
+                    </span>
+                    <p class="_text-danger">
+                        9
+                        <span class="_text-muted">14</span>
+                        <img src="" alt="">
+                    </p>
+                </li>
+                <li class="recent-matches-list__item ">
+                    <span class="_text-muted">
+                        ASSISTS
+                    </span>
+                    <p>
+                        16
+                        <span class="_text-muted">25</span>
+                        <img src="" alt="">
+                    </p>
+                </li>
+                <li class="recent-matches-list__item ">
+                    <span class="_text-muted">
+                        GPM
+                    </span>
+                    <p>
+                        473
+                        <span class="_text-muted">731</span>
+                        <img src="" alt="">
+                    </p>
+                </li>
+                <li class="recent-matches-list__item ">
+                    <span class="_text-muted">
+                        XPM
+                    </span>
+                    <p>
+                        625
+                        <span class="_text-muted">839</span>
+                        <img src="" alt="">
+                    </p>
+                </li>
+                <li class="recent-matches-list__item ">
+                    <span class="_text-muted">
+                        LASTHITS
+                    </span>
+                    <p>
+                        185
+                        <span class="_text-muted">565</span>
+                        <img src="" alt="">
+                    </p>
+                </li>
+                <li class="recent-matches-list__item ">
+                    <span class="_text-muted">
+                        HERO DAMAGE
+                    </span>
+                    <p>
+                        27.4k
+                        <span class="_text-muted">95.1k</span>
+                        <img src="" alt="">
+                    </p>
+                </li>
+                <li class="recent-matches-list__item ">
+                    <span class="_text-muted">
+                        ALLIES HEAL
+                    </span>
+                    <p>
+                        2.5k
+                        <span class="_text-muted">10.8k</span>
+                        <img src="" alt="">
+                    </p>
+                </li>
+                <li class="recent-matches-list__item ">
+                    <span class="_text-muted">
+                        TOWER DAMAGE
+                    </span>
+                    <p>
+                        3.7k
+                        <span class="_text-muted">18.4k</span>
+                        <img src="" alt="">
+                    </p>
+                </li>
+                <li class="recent-matches-list__item ">
+                    <span class="_text-muted">
+                        MATCH DURATION
+                    </span>
+                    <p>
+                        40:51
+                        <span class="_text-muted">65:26</span>
+                        <img src="" alt="">
+                    </p>
+                </li>
+            </ul>
+        </div>
+        <h2> Recent matches (25)</h2>
+        <table class="table main-content__matches-table matches-table">
+            <thead>
+                <th class="matche-table__th _text-muted">
+                    Hero
+                </th>
+                <th class="matches-table__th _text-muted">
+                    Player
+                </th>
+                <th class="matches-table__th _text-muted">
+                    Result
+                </th>
+                <th class="matches-table__th _text-muted">
+                    Draft
+                </th>
+                <th class="matches-table__th _text-muted">
+                    Start
+                </th>
+                <th class="matches-table__th _text-muted">
+                    Abilities until lvl10
+                </th>
+                <th class="matches-table__th _text-muted">
+                    MMR
+                </th>
+                <th class="matches-table__th _text-muted">
+                    Duration
+                </th>
+                <th class="matches-table__th _text-muted">
+                    IDimage
+                </th>
+            </thead>
+            <tbody>
+                <tr class="match-info">
+                    <td class="matches-table__td">
+                        <img src="/image/Bloodseeker_minimap_icon.png" alt="">
+                    </td>
+                    <td class="matches-table__td">
+                        <span>Cooman</span>
+                    </td>
+                    <td class="matches-table__td ">
+                        <span>team_dire:</span> <span class="_text-danger">lost</span>
+                    </td>
+                    <td class="matches-table__td ">
+                        <div class="team team-radiant">
+                            <img src="/image/Pudge_minimap_icon.png" alt="">
+                            <img src="/image/Skywrath_Mage_minimap_icon.png" alt="">
+                            <img src="/image/Legion_Commander_minimap_icon.png" alt="">
+                            <img src="/image/Storm_Spirit_minimap_icon.png" alt="">
+                            <img src="/image/Sniper_minimap_icon.png" alt="">
+                        </div>
+                        <div class="team team-dire">
+                            <img src="/image/Phoenix_minimap_icon.png" alt="">
+                            <img class="player-hero" src="/image/Bloodseeker_minimap_icon.png" alt="">
+                            <img src="/image/Slardar_minimap_icon.png" alt="">
+                            <img src="/image/Enchantress_minimap_icon.png" alt="">
+                            <img src="/image/Zeus_minimap_icon.png" alt="">
+                        </div>
+                    </td>
+                    <td class="matches-table__td ">
+                        <img src="" alt="">
+                        <img src="" alt="">
+                        <img src="" alt="">
+                        <img src="" alt="">
+                        <img src="" alt="">
+                        <img src="" alt="">
+                    </td>
+                    <td class="matches-table__td" valign="center">
+                        <img src="/image/bloodseeker_blood_bath.png" alt="">
+                        <img src="/image/bloodseeker_thirst.png" alt="">
+                        <img src="/image/bloodseeker_thirst.png" alt="">
+                        <img src="/image/bloodseeker_bloodrage.png" alt="">
+                        <img src="/image/bloodseeker_thirst.png" alt="">
+                        <img src="/image/bloodseeker_rupture.png" alt="">
+                        <img src="/image/bloodseeker_thirst.png" alt="">
+                        <img src="/image/bloodseeker_bloodrage.png" alt="">
+                        <img src="/image/bloodseeker_bloodrage.png" alt="">
+                        <img src="/image/bloodseeker_bloodrage.png" alt="">
+                    </td>
+                    <td class="matches-table__td ">
+                        <span>8792</span>
+                    </td>
+                    <td class="matches-table__td ">
+                        <span>38:01</span>
+                    </td>
+                    <td class="matches-table__td ">
+                        <a href=""><img src="/image//external-link-squared.png" width="20px" height="20px"
+                                alt=""></a>
+                    </td>
+                </tr>
+                <tr class="matches-table__tr-end"></tr>
+            </tbody>
+        </table>
+
+        <h2>Recently played on heroes</h2>
+        <table class="table main-content__heroes-table heroes-table">
+            <thead>
+                <th class="heroes-table__th _text-muted">Hero</th>
+                <th class="heroes-table__th _text-muted">Matches</th>
+                <th class="heroes-table__th _text-muted">Winrate</th>
+                <th class="heroes-table__th _text-muted">Winstreak (max)</th>
+                <th class="heroes-table__th _text-muted">GPM (avg)</th>
+                <th class="heroes-table__th _text-muted">XPM (avg)</th>
+                <th class="heroes-table__th _text-muted">Kills</th>
+                <th class="heroes-table__th _text-muted">Deathes</th>
+                <th class="heroes-table__th _text-muted">Assists</th>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="heroes-table__td">
+                        <img src="/image/Bloodseeker_minimap_icon.png" alt="">
+                    </td>
+                    <td class="heroes-table__td">
+                        <span>14</span>
+                    </td>
+                    <td class="heroes-table__td">
+                        <span id="winrate" class="">50%</span>
+                    </td>
+                    <td class="heroes-table__td">
+                        <span>3</span>
+                    </td>
+                    <td class="heroes-table__td">
+                        <span>495</span>
+                    </td>
+                    <td class="heroes-table__td">
+                        <span>646</span>
+                    </td>
+                    <td class="heroes-table__td">
+                        <span>11</span>
+                    </td>
+                    <td class="heroes-table__td">
+                        <span>8</span>
+                    </td>
+                    <td class="heroes-table__td">
+                        <span>10</span>
+                    </td>
+                </tr>
+                <tr class="heroes-table__tr-end"></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <footer class="footer">
+        <div class="footer__contact">
+            <img src="/image/logo-removed-bg.png" alt="30px" width="120px">
+            <span>+380000000000</span>
+            <span>exmaple@gmail.com</span>
+        </div>
+        <small class="footer__about">Open source Dota 2 information platform - powered by Steam</small>
+        <hr>
+        <div class="footer__pages">
+            <a class="_text-muted" href="#">OPENDOTA</a>
+            <div class="divider">•</div>
+            <a class="_text-muted" href="">DOTABUFF</a>
+            <div class="divider">•</div>
+            <a class="_text-muted" href="">DOTA2PT</a>
+            <div class="divider">•</div>
+            <a class="_text-muted" href="">Steam</a>
+        </div>
+    </footer>
+</body>
+
+<script>
+
+    let winrate_container = document.getElementById("winrate");
+
+    let winrate = +winrate_container.textContent.slice(0, -1);
+
+    if (winrate >= 60) winrate_container.classList.add('_text-succes');
+    else if (winrate <= 40) winrate_container.classList.add('_text-danger');
+
+</script>
+
+</html>
