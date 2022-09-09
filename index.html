@@ -5,7 +5,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Dota Helper</title>
+    <link rel="shortcut icon" href="/image/favicon.png" type="image/x-icon">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
@@ -13,339 +14,329 @@
     <link rel="stylesheet" href="style.css">
 </head>
 
-<body>
-    <nav class="navbar navbar_bg-dark">
-        <button class="navbar__toggler">--</button>
+<body id="mainBody">
+    <a id="to-top">
+        <div class="mark"></div>
+    </a>
+    <nav id="mainNav" class="navbar navbar_bg-dark sidenav">
+        <button id="openbtn" class="navbar__toggler">☰</button>
         <div class="navbar__logo"><img src="/image/logo-removed-bg.png" alt="" width="120px" height="30px"></div>
-        <a id="profile" class="navbar__link navbar__link_text-info" href="">Profile</a>
-        <a id="matches" class="navbar__link navbar__link_text-info" href="">Matches</a>
-        <a id="heroes" class="navbar__link navbar__link_text-info" href="">Heroes</a>
-        <a id="statistics" class="navbar__link navbar__link_text-info" href="">Statistics</a>
+        <div class="option">
+            <a id="profile" class="navbar__link navbar__link_text-info" href="#profile-anchor">Profile</a>
+            <a id="matches" class="navbar__link navbar__link_text-info" href="#matches-anchor">Matches</a>
+            <a id="heroes" class="navbar__link navbar__link_text-info" href="#heroes-anchor">Heroes</a>
+            <a id="statistics" class="navbar__link navbar__link_text-info" href="#statistics-anchor">Statistics</a>
+        </div>
+        <button class="navbar__logout-button">Logout</button>
     </nav>
 
+    <a class="navbar-anchor" name="profile-anchor"></a>
     <div class="profile-info">
-        <div class="profile-info__logo"><img src="/image/profile-logo.jpg" height="124px" width="124px">
-        </div>
+        <div class="profile-info__logo skeleton"></div>
         <div class="profile-info__content profile-content">
             <div class="profile-content__buttons profile-buttons">
-                <a class="profile-buttons__title">Misha</a>
-                <a class="profile-buttons__picture"><img src="" alt=""></a>
+                <div class="profile-buttons__title skeleton skeleton-text-24"></div>
+                <div class="profile-buttons__picture skeleton" style="margin-left: .5rem;"></div>
             </div>
             <div class="profile-info__stats stats">
-                <div class="stats__container">
-                    <span class="stats__container_text-muted">
-                        WINS
-                    </span>
-                    <span class="stats__container_text-succes">
-                        246
-                    </span>
-                </div>
-                <div class="stats__container">
-                    <span class="stats__container_text-muted">
-                        LOSES
-                    </span>
-                    <span class="stats__container_text-danger">
-                        216
-                    </span>
-                </div>
-                <div class="stats__container">
-                    <span class="stats__container_text-muted">
-                        WIN RATE
-                    </span>
-                    <span class="stats__container_text-info">
-                        53.25%
-                    </span>
+                <div style="width: 80%">
+                    <div class="stats__container wins skeleton skeleton-text"></div>
+                    <div class="stats__container wins skeleton skeleton-text"></div>
                 </div>
             </div>
         </div>
-        <div class="profile-info__rank"><img src="/image/rank_image-removebg-preview.png" alt=""
-                height="124px" width="124px"></div>
+        <div class="profile-info__rank"><img src="/image/rank_image-removebg-preview.png" alt="" height="124px"
+                width="124px"></div>
     </div>
 
-    <div class="main-content">
+    <main class="content-container main-content">
+        <a class="navbar-anchor" name="statistics-anchor"></a>
         <h2>Stats of recently played matches (avg/max)</h2>
         <div class="main-content__recently-played recently-played">
             <ul class="recently-played__list recent-matches-list">
                 <li class="recent-matches-list__item ">
-                    <span class="_text-muted">
-                        WINRATE
-                    </span>
-                    <p>
-                        60%
-                    </p>
+                    <div style="height: 57px; width: 100px;">
+                        <div class="skeleton skeleton-text-14"></div>
+                        <div class="skeleton skeleton-text-24"></div>
+                    </div>
                 </li>
                 <li class="recent-matches-list__item ">
-                    <span class="_text-muted">
-                        KILLS
-                    </span>
-                    <p class="_text-succes">
-                        9
-                        <span class="_text-muted">17</span>
-                        <img src="" alt="">
-                    </p>
+                    <div style="height: 57px; width: 100px;">
+                        <div class="skeleton skeleton-text-14"></div>
+                        <div class="skeleton skeleton-text-24"></div>
+                    </div>
                 </li>
                 <li class="recent-matches-list__item ">
-                    <span class="_text-muted">
-                        DEATHES
-                    </span>
-                    <p class="_text-danger">
-                        9
-                        <span class="_text-muted">14</span>
-                        <img src="" alt="">
-                    </p>
+                    <div style="height: 57px; width: 100px;">
+                        <div class="skeleton skeleton-text-14"></div>
+                        <div class="skeleton skeleton-text-24"></div>
+                    </div>
                 </li>
                 <li class="recent-matches-list__item ">
-                    <span class="_text-muted">
-                        ASSISTS
-                    </span>
-                    <p>
-                        16
-                        <span class="_text-muted">25</span>
-                        <img src="" alt="">
-                    </p>
+                    <div style="height: 57px; width: 100px;">
+                        <div class="skeleton skeleton-text-14"></div>
+                        <div class="skeleton skeleton-text-24"></div>
+                    </div>
                 </li>
                 <li class="recent-matches-list__item ">
-                    <span class="_text-muted">
-                        GPM
-                    </span>
-                    <p>
-                        473
-                        <span class="_text-muted">731</span>
-                        <img src="" alt="">
-                    </p>
+                    <div style="height: 57px; width: 100px;">
+                        <div class="skeleton skeleton-text-14"></div>
+                        <div class="skeleton skeleton-text-24"></div>
+                    </div>
                 </li>
                 <li class="recent-matches-list__item ">
-                    <span class="_text-muted">
-                        XPM
-                    </span>
-                    <p>
-                        625
-                        <span class="_text-muted">839</span>
-                        <img src="" alt="">
-                    </p>
+                    <div style="height: 57px; width: 100px;">
+                        <div class="skeleton skeleton-text-14"></div>
+                        <div class="skeleton skeleton-text-24"></div>
+                    </div>
                 </li>
                 <li class="recent-matches-list__item ">
-                    <span class="_text-muted">
-                        LASTHITS
-                    </span>
-                    <p>
-                        185
-                        <span class="_text-muted">565</span>
-                        <img src="" alt="">
-                    </p>
+                    <div style="height: 57px; width: 100px;">
+                        <div class="skeleton skeleton-text-14"></div>
+                        <div class="skeleton skeleton-text-24"></div>
+                    </div>
                 </li>
                 <li class="recent-matches-list__item ">
-                    <span class="_text-muted">
-                        HERO DAMAGE
-                    </span>
-                    <p>
-                        27.4k
-                        <span class="_text-muted">95.1k</span>
-                        <img src="" alt="">
-                    </p>
+                    <div style="height: 57px; width: 100px;">
+                        <div class="skeleton skeleton-text-14"></div>
+                        <div class="skeleton skeleton-text-24"></div>
+                    </div>
                 </li>
                 <li class="recent-matches-list__item ">
-                    <span class="_text-muted">
-                        ALLIES HEAL
-                    </span>
-                    <p>
-                        2.5k
-                        <span class="_text-muted">10.8k</span>
-                        <img src="" alt="">
-                    </p>
+                    <div style="height: 57px; width: 100px;">
+                        <div class="skeleton skeleton-text-14"></div>
+                        <div class="skeleton skeleton-text-24"></div>
+                    </div>
                 </li>
                 <li class="recent-matches-list__item ">
-                    <span class="_text-muted">
-                        TOWER DAMAGE
-                    </span>
-                    <p>
-                        3.7k
-                        <span class="_text-muted">18.4k</span>
-                        <img src="" alt="">
-                    </p>
+                    <div style="height: 57px; width: 100px;">
+                        <div class="skeleton skeleton-text-14"></div>
+                        <div class="skeleton skeleton-text-24"></div>
+                    </div>
                 </li>
                 <li class="recent-matches-list__item ">
-                    <span class="_text-muted">
-                        MATCH DURATION
-                    </span>
-                    <p>
-                        40:51
-                        <span class="_text-muted">65:26</span>
-                        <img src="" alt="">
-                    </p>
+                    <div style="height: 57px; width: 100px;">
+                        <div class="skeleton skeleton-text-14"></div>
+                        <div class="skeleton skeleton-text-24"></div>
+                    </div>
                 </li>
             </ul>
         </div>
-        <h2> Recent matches (25)</h2>
-        <table class="table main-content__matches-table matches-table">
-            <thead>
-                <th class="matche-table__th _text-muted">
-                    Hero
-                </th>
-                <th class="matches-table__th _text-muted">
-                    Player
-                </th>
-                <th class="matches-table__th _text-muted">
-                    Result
-                </th>
-                <th class="matches-table__th _text-muted">
-                    Draft
-                </th>
-                <th class="matches-table__th _text-muted">
-                    Start
-                </th>
-                <th class="matches-table__th _text-muted">
-                    Abilities until lvl10
-                </th>
-                <th class="matches-table__th _text-muted">
-                    MMR
-                </th>
-                <th class="matches-table__th _text-muted">
-                    Duration
-                </th>
-                <th class="matches-table__th _text-muted">
-                    IDimage
-                </th>
-            </thead>
-            <tbody>
-                <tr class="match-info">
-                    <td class="matches-table__td">
-                        <img src="/image/Bloodseeker_minimap_icon.png" alt="">
-                    </td>
-                    <td class="matches-table__td">
-                        <span>Cooman</span>
-                    </td>
-                    <td class="matches-table__td ">
-                        <span>team_dire:</span> <span class="_text-danger">lost</span>
-                    </td>
-                    <td class="matches-table__td ">
-                        <div class="team team-radiant">
-                            <img src="/image/Pudge_minimap_icon.png" alt="">
-                            <img src="/image/Skywrath_Mage_minimap_icon.png" alt="">
-                            <img src="/image/Legion_Commander_minimap_icon.png" alt="">
-                            <img src="/image/Storm_Spirit_minimap_icon.png" alt="">
-                            <img src="/image/Sniper_minimap_icon.png" alt="">
-                        </div>
-                        <div class="team team-dire">
-                            <img src="/image/Phoenix_minimap_icon.png" alt="">
-                            <img class="player-hero" src="/image/Bloodseeker_minimap_icon.png" alt="">
-                            <img src="/image/Slardar_minimap_icon.png" alt="">
-                            <img src="/image/Enchantress_minimap_icon.png" alt="">
-                            <img src="/image/Zeus_minimap_icon.png" alt="">
-                        </div>
-                    </td>
-                    <td class="matches-table__td ">
-                        <img src="" alt="">
-                        <img src="" alt="">
-                        <img src="" alt="">
-                        <img src="" alt="">
-                        <img src="" alt="">
-                        <img src="" alt="">
-                    </td>
-                    <td class="matches-table__td" valign="center">
-                        <img src="/image/bloodseeker_blood_bath.png" alt="">
-                        <img src="/image/bloodseeker_thirst.png" alt="">
-                        <img src="/image/bloodseeker_thirst.png" alt="">
-                        <img src="/image/bloodseeker_bloodrage.png" alt="">
-                        <img src="/image/bloodseeker_thirst.png" alt="">
-                        <img src="/image/bloodseeker_rupture.png" alt="">
-                        <img src="/image/bloodseeker_thirst.png" alt="">
-                        <img src="/image/bloodseeker_bloodrage.png" alt="">
-                        <img src="/image/bloodseeker_bloodrage.png" alt="">
-                        <img src="/image/bloodseeker_bloodrage.png" alt="">
-                    </td>
-                    <td class="matches-table__td ">
-                        <span>8792</span>
-                    </td>
-                    <td class="matches-table__td ">
-                        <span>38:01</span>
-                    </td>
-                    <td class="matches-table__td ">
-                        <a href=""><img src="/image//external-link-squared.png" width="20px" height="20px"
-                                alt=""></a>
-                    </td>
-                </tr>
-                <tr class="matches-table__tr-end"></tr>
-            </tbody>
-        </table>
-
+        <a class="navbar-anchor" name="matches-anchor"></a>
+        <h2>Recent matches (25)</h2>
+        <div class="responsive-table-container">
+            <table id="MatchesTable" class="table main-content__matches-table matches-table">
+                <thead>
+                    <th class="matches-table__th _text-muted match-info__num">
+                        <button class="matches-table__sort-button">№</button>
+                    </th>
+                    <th class="matches-table__th _text-muted match-info__hero">
+                        <button class="matches-table__sort-button">Hero</button>
+                    </th>
+                    <th class="matches-table__th _text-muted match-info__result">
+                        <button class="matches-table__sort-button">Result</button>
+                    </th>
+                    <th class="matches-table__th _text-muted match-info__draft">
+                        <button class="matches-table__sort-button disabled" disabled>Draft
+                    </th>
+                    <th class="matches-table__th _text-muted match-info__networth">
+                        <button class="matches-table__sort-button">Networth</button>
+                    </th>
+                    <th class="matches-table__th _text-muted match-info_kda">
+                        <button class="matches-table__sort-button">K/D/A</button>
+                    </th>
+                    <th class="matches-table__th _text-muted match-info__gpm">
+                        <button class="matches-table__sort-button">GPM</button>
+                    </th>
+                    <th class="matches-table__th _text-muted match-info__xpm">
+                        <button class="matches-table__sort-button">XPM</button>
+                    </th>
+                    <th class="matches-table__th _text-muted match-info__items">
+                        <button class="matches-table__sort-button disabled" disabled>Items</button>
+                    </th>
+                    <th class="matches-table__th _text-muted match-info__duration">
+                        <button class="matches-table__sort-button">Duration</button>
+                    </th>
+                    <th class="matches-table__th _text-muted match-info__match-id">
+                        <button class="matches-table__sort-button disabled" disabled>ID</button>
+                    </th>
+                </thead>
+                <tbody>
+                    <tr class="matches-table__tr-start"></tr>
+                    <template class="matches-table__template">
+                        <tr class="match-info" style="width: 100%">
+                            <td class="matches-table__td match-info__match-id" data-label="Duration">
+                                <div class="skeleton skeleton-text-14"></div>
+                            </td>
+                            <td class="matches-table__td match-info__hero" data-label="Hero">
+                                <div class="skeleton" style="width: 32px; height: 32px; margin: auto;"></div>
+                            </td>
+                            <td class="matches-table__td match-info__result" data-label="Player">
+                                <div class="skeleton skeleton-text-14"></div>
+                            </td>
+                            <td class="matches-table__td match-info__draft" data-label="Result">
+                                <div class="draft">
+                                    <div class="team team-radiant">
+                                        <div class="skeleton" style="width: 28px; height: 28px; margin: 2px;"></div>
+                                        <div class="skeleton" style="width: 28px; height: 28px; margin: 2px;"></div>
+                                        <div class="skeleton" style="width: 28px; height: 28px; margin: 2px;"></div>
+                                        <div class="skeleton" style="width: 28px; height: 28px; margin: 2px;"></div>
+                                        <div class="skeleton" style="width: 28px; height: 28px; margin: 2px;"></div>
+                                    </div>
+                                    <div class="team team-dire">
+                                        <div class="skeleton" style="width: 28px; height: 28px; margin: 2px;"></div>
+                                        <div class="skeleton" style="width: 28px; height: 28px; margin: 2px;"></div>
+                                        <div class="skeleton" style="width: 28px; height: 28px; margin: 2px;"></div>
+                                        <div class="skeleton" style="width: 28px; height: 28px; margin: 2px;"></div>
+                                        <div class="skeleton" style="width: 28px; height: 28px; margin: 2px;"></div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="matches-table__td match-info__networth" data-label="Draft">
+                                <div class="skeleton skeleton-text-14"></div>
+                            </td>
+                            <td class="matches-table__td match-info__kda" data-label="Start">
+                                <div class="skeleton skeleton-text-14"></div>
+                            </td>
+                            <td class="matches-table__td match-info__gpm" valign="center"
+                                data-label="Abilities until lvl 10">
+                                <div class="skeleton skeleton-text-14"></div>
+                            </td>
+                            <td class="matches-table__td match-info__xpm" data-label="MMR">
+                                <div class="skeleton skeleton-text-14"></div>
+                            </td>
+                            <td class="matches-table__td match-info__items" data-label="Duration">
+                                <div style="display: flex;">
+                                    <div class="skeleton" style="width: 28px; height: 28px; margin: 2px;"></div>
+                                    <div class="skeleton" style="width: 28px; height: 28px; margin: 2px;"></div>
+                                    <div class="skeleton" style="width: 28px; height: 28px; margin: 2px;"></div>
+                                </div>
+                                <div style="display: flex;">
+                                    <div class="skeleton" style="width: 28px; height: 28px; margin: 2px;"></div>
+                                    <div class="skeleton" style="width: 28px; height: 28px; margin: 2px;"></div>
+                                    <div class="skeleton" style="width: 28px; height: 28px; margin: 2px;"></div>
+                                </div>
+                            </td>
+                            <td class="matches-table__td match-info__duration" data-label="ID">
+                                <div class="skeleton skeleton-text-14"></div>
+                            </td>
+                            <td class="matches-table__td match-info__match-id" data-label="Duration">
+                                <div class="skeleton" style="width: 20px; height: 20px; margin: auto;"></div>
+                            </td>
+                        </tr>
+                    </template>
+                    <tr class="matches-table__tr-end"></tr>
+                </tbody>
+            </table>
+        </div>
+        <a class="navbar-anchor" name="heroes-anchor"></a>
         <h2>Recently played on heroes</h2>
-        <table class="table main-content__heroes-table heroes-table">
-            <thead>
-                <th class="heroes-table__th _text-muted">Hero</th>
-                <th class="heroes-table__th _text-muted">Matches</th>
-                <th class="heroes-table__th _text-muted">Winrate</th>
-                <th class="heroes-table__th _text-muted">Winstreak (max)</th>
-                <th class="heroes-table__th _text-muted">GPM (avg)</th>
-                <th class="heroes-table__th _text-muted">XPM (avg)</th>
-                <th class="heroes-table__th _text-muted">Kills</th>
-                <th class="heroes-table__th _text-muted">Deathes</th>
-                <th class="heroes-table__th _text-muted">Assists</th>
-            </thead>
-            <tbody>
-                <tr>
-                    <td class="heroes-table__td">
-                        <img src="/image/Bloodseeker_minimap_icon.png" alt="">
-                    </td>
-                    <td class="heroes-table__td">
-                        <span>14</span>
-                    </td>
-                    <td class="heroes-table__td">
-                        <span id="winrate" class="">50%</span>
-                    </td>
-                    <td class="heroes-table__td">
-                        <span>3</span>
-                    </td>
-                    <td class="heroes-table__td">
-                        <span>495</span>
-                    </td>
-                    <td class="heroes-table__td">
-                        <span>646</span>
-                    </td>
-                    <td class="heroes-table__td">
-                        <span>11</span>
-                    </td>
-                    <td class="heroes-table__td">
-                        <span>8</span>
-                    </td>
-                    <td class="heroes-table__td">
-                        <span>10</span>
-                    </td>
-                </tr>
-                <tr class="heroes-table__tr-end"></tr>
-            </tbody>
-        </table>
-    </div>
+        <div class="responsive-table-container">
+            <table id="HeroesTable" class="table main-content__heroes-table heroes-table">
+                <thead>
+                    <th class="heroes-table__th _text-muted heroes-info__num">
+                        <button class="heroes-table__sort-button">№</button>
+                    </th>
+                    <th class="heroes-table__th _text-muted heroes-info__hero">
+                        <button class="heroes-table__sort-button">Hero</button>
+                    </th>
+                    <th class="heroes-table__th _text-muted heroes-info__matches">
+                        <button class="heroes-table__sort-button">Matches</button>
+                    </th>
+                    <th class="heroes-table__th _text-muted heroes-info__winrate">
+                        <button class="heroes-table__sort-button">Winrate</button>
+                    </th>
+                    <th class="heroes-table__th _text-muted heroes-info__networth">
+                        <button class="heroes-table__sort-button">Networth (avg)</button>
+                    </th>
+                    <th class="heroes-table__th _text-muted heroes-info__lasthits">
+                        <button class="heroes-table__sort-button">Lasthits (avg)</button>
+                    </th>
+                    <th class="heroes-table__th _text-muted heroes-info__gpm">
+                        <button class="heroes-table__sort-button">GPM (avg)</button>
+                    </th>
+                    <th class="heroes-table__th _text-muted heroes-info__xpm">
+                        <button class="heroes-table__sort-button">XPM (avg)</button>
+                    </th>
+                    <th class="heroes-table__th _text-muted heroes-info__kills">
+                        <button class="heroes-table__sort-button">Kills</button>
+                    </th>
+                    <th class="heroes-table__th _text-muted heroes-info__deathes">
+                        <button class="heroes-table__sort-button">Deaths</button>
+                    </th>
+                    <th class="heroes-table__th _text-muted heroes-info__assists">
+                        <button class="heroes-table__sort-button">Assists</button>
+                    </th>
+                </thead>
+                <tbody>
+                    <tr class="heroes-table__tr-start"></tr>
+                    <template class="heroes-table__template">
+                        <tr class="heroes-info">
+                            <td class="heroes-table__td heroes-info__hero" data-label="№">
+                                <div class="skeleton skeleton-text-14"></div>
+                            </td>
+                            <td class="heroes-table__td heroes-info__hero" data-label="Hero">
+                                <div class="skeleton" style="width: 32px; height: 32px; margin: auto;"></div>
+                            </td>
+                            <td class="heroes-table__td heroes-info__matches" data-label="Matches">
+                                <div class="skeleton skeleton-text-14"></div>
+                            </td>
+                            <td class="heroes-table__td heroes-info__winrate" data-label="Winrate">
+                                <div class="skeleton skeleton-text-14"></div>
+                            </td>
+                            <td class="heroes-table__td heroes-info__networth" data-label="Networth">
+                                <div class="skeleton skeleton-text-14"></div>
+                            </td>
+                            <td class="heroes-table__td heroes-info__lasthits" data-label="Lasthits">
+                                <div class="skeleton skeleton-text-14"></div>
+                            </td>
+                            <td class="heroes-table__td heroes-info__gpm" data-label="GPM (avg)">
+                                <div class="skeleton skeleton-text-14"></div>
+                            </td>
+                            <td class="heroes-table__td heroes-info__xpm" data-label="XPM (avg)">
+                                <div class="skeleton skeleton-text-14"></div>
+                            </td>
+                            <td class="heroes-table__td heroes-info__kills" data-label="Kills">
+                                <div class="skeleton skeleton-text-14"></div>
+                            </td>
+                            <td class="heroes-table__td heroes-info__deathes" data-label="Deathes">
+                                <div class="skeleton skeleton-text-14"></div>
+                            </td>
+                            <td class="heroes-table__td heroes-info__assists" data-label="Assists">
+                                <div class="skeleton skeleton-text-14"></div>
+                            </td>
+                        </tr>
+                    </template>
+                    <tr class="heroes-table__tr-end"></tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
 
     <footer class="footer">
-        <div class="footer__contact">
-            <img src="/image/logo-removed-bg.png" alt="30px" width="120px">
-            <span>+380000000000</span>
-            <span>exmaple@gmail.com</span>
-        </div>
-        <small class="footer__about">Open source Dota 2 information platform - powered by Steam</small>
-        <hr>
-        <div class="footer__pages">
-            <a class="_text-muted" href="#">OPENDOTA</a>
-            <div class="divider">•</div>
-            <a class="_text-muted" href="">DOTABUFF</a>
-            <div class="divider">•</div>
-            <a class="_text-muted" href="">DOTA2PT</a>
-            <div class="divider">•</div>
-            <a class="_text-muted" href="">Steam</a>
+        <div class="content-container">
+            <div class="footer__contact content">
+                <img src="/image/logo-removed-bg.png" alt="30px" width="120px">
+                <span>+380000000000</span>
+                <span>exmaple@gmail.com</span>
+            </div>
+            <small class="footer__about">Open source Dota 2 information platform - powered by Steam</small>
+            <hr>
+            <div class="footer__pages">
+                <a class="_text-muted" href="#">OPENDOTA</a>
+                <div class="divider">•</div>
+                <a class="_text-muted" href="">DOTABUFF</a>
+                <div class="divider">•</div>
+                <a class="_text-muted" href="">DOTA2PT</a>
+                <div class="divider">•</div>
+                <a class="_text-muted" href="">Steam</a>
+            </div>
         </div>
     </footer>
 </body>
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script type="module" src="/scripts/pages/home/index.mjs"></script>
 <script>
-
-    let winrate_container = document.getElementById("winrate");
-
-    let winrate = +winrate_container.textContent.slice(0, -1);
-
-    if (winrate >= 60) winrate_container.classList.add('_text-succes');
-    else if (winrate <= 40) winrate_container.classList.add('_text-danger');
-
 </script>
 
 </html>

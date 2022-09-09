@@ -1,0 +1,5 @@
+mider, carry - 600gpm 650-700xpm 4500-5000 networth
+
+offlaner - 500gpm 550-600xpm 3000-4000 networth
+
+support - 350-400gpm 450-550xpm 2000 networth
