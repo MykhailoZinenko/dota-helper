@@ -18,7 +18,6 @@ import {
 } from "../../utils/dataManager.mjs"
 
 export default {
-
     async getProfileInfo() {
         let profileInfoData = null;
         let profileWlData = null;
@@ -49,34 +48,95 @@ export default {
         return profileInfo;
     },
 
+    info: {
+        matches: [],
+        heroes: [],
+        statistics: {
+            average: {
+                kills: null,
+                deaths: null,
+                assists: null,
+                gpm: null,
+                xpm: null,
+                lasthits: null,
+                heroes_damage: null,
+                allies_heal: null,
+                tower_damage: null,
+                duration: null
+            },
+            max: {
+                kills: {
+                    value: null,
+                    heroImg: null
+                },
+                deaths: {
+                    value: null,
+                    heroImg: null
+                },
+                assists: {
+                    value: null,
+                    heroImg: null
+                },
+                gpm: {
+                    value: null,
+                    heroImg: null
+                },
+                xpm: {
+                    value: null,
+                    heroImg: null
+                },
+                lasthits: {
+                    value: null,
+                    heroImg: null
+                },
+                heroes_damage: {
+                    value: null,
+                    heroImg: null
+                },
+                allies_heal: {
+                    value: null,
+                    heroImg: null
+                },
+                tower_damage: {
+                    value: null,
+                    heroImg: null
+                },
+                duration: {
+                    value: null,
+                    heroImg: null
+                },
+            },
+            wins: 0,
+            loses: 0,
+            winrate: null,
+        }
+    },
+
     async getMatchesInfo() {
         let matchesInfoData = [];
 
         let heroesIdData = null;
         let itemsIdData = null;
 
-        $.getJSON('json/heroes-id.json', function (result) {
-            heroesIdData = result.result.heroes;
-            //console.log(heroesIdData);
-        })
+        heroesIdData = await (await fetch('json/heroes-id.json')).json();
+        heroesIdData = heroesIdData.result.heroes;
 
-        $.getJSON('json/items-id.json', function (result) {
-            itemsIdData = result;
-            console.log(itemsIdData);
-        })
+        itemsIdData = await (await fetch('json/items-id.json')).json();
 
         const matchesDataManager = new DataManager(GET_MATCHES_HISTORY_URL, { params: RAPID_API_MATCHES_URL_PARAMS, requestOptions: RAPID_API_REQUEST_OPTIONS });
 
         const matchesData = await matchesDataManager.fetch();
         const matches = matchesData.result.matches;
 
-        console.log(matches);
-
         if (matches.length === 0) {
             throw new Error("No matches!");
         }
 
-        const callbackQueue = [];
+        /*
+        The array below consists of fetching callbacks to be executed in order
+         with a delay to prevent the API provider from blocking them */
+
+        const fetchQueue = [];
 
         for (const match of matches) {
             const params = { key: RAPID_API_MATCHES_URL_PARAMS.key, account_id: '76561198950833611', match_id: match.match_id };
@@ -90,16 +150,16 @@ export default {
                 matchesInfoData.push(matchDetailDataManager.cache)
             } else {
                 const fetchCallback = matchDetailDataManager.fetch.bind(matchDetailDataManager);
-                callbackQueue.push(fetchCallback);
+                fetchQueue.push(fetchCallback);
             }
         }
 
-        if (callbackQueue.length > 0) {
+        if (fetchQueue.length > 0) {
             let index = 0;
             await new Promise((resolve, reject) => {
                 const intervalId = setInterval(() => {
-                    matchesInfoData.push(callbackQueue[index]());
-                    if (index >= callbackQueue.length - 1) {
+                    matchesInfoData.push(fetchQueue[index]());
+                    if (index >= fetchQueue.length - 1) {
                         clearInterval(intervalId);
                         return resolve();
                     }
@@ -110,7 +170,7 @@ export default {
             matchesInfoData = await Promise.all(matchesInfoData);
         }
 
-        let matchesArray = [];
+        let matchesInfo = [];
 
         for (const match of matchesInfoData) {
             console.log(match);
@@ -153,9 +213,9 @@ export default {
                 }
             }
             result = ((match.result.radiant_win === true && player.team == 'radiant') || (match.result.radiant_win === false && player.team == 'dire')) ? 'won' : 'lost';
-            matchesArray.push({
-                player_hero: player.hero,
-                player_team: player.team,
+            this.info.matches.push({
+                playerHero: player.hero,
+                playerTeam: player.team,
                 result,
                 draft: imgArray,
                 networth: player.networth,
@@ -174,19 +234,38 @@ export default {
                 match_id: match.result.match_id,
             });
         }
-        const matchesInfo = matchesArray;
-
-        return matchesInfo;
     },
 
-    heroes: [],
+    setStatisticsData(data) {
+        for (const match of data) {
+            if (match.result === 'won') this.info.statistics.wins++;
+            else this.info.statistics.loses++;
+
+            for (const key in this.info.statistics.average) {
+                match[key] ? this.info.statistics.average[key] += match[key] : this.info.statistics.average[key] += 0;
+                if (match[key] > this.info.statistics.max[key].value) {
+                    this.info.statistics.max[key].value = match[key];
+                    this.info.statistics.max[key].heroImg = match.playerHero;
+                }
+            }
+        }
+
+        for (const key in this.info.statistics.average) {
+            console.log(this.info.statistics.average[key]);
+            this.info.statistics.average[key] = Math.round(this.info.statistics.average[key] / data.length);
+        }
+
+        console.log(this.info.statistics.average, this.info.statistics.max);
+
+        this.info.statistics.winrate = this.info.statistics.wins / (this.info.statistics.wins + this.info.statistics.loses) * 100;
+    },
 
     setHeroesData(data) {
         const heroesObject = {};
         for (const match of data) {
-            if (!heroesObject[match.player_hero]) {
-                heroesObject[match.player_hero] = {
-                    hero: match.player_hero,
+            if (!heroesObject[match.playerHero]) {
+                heroesObject[match.playerHero] = {
+                    hero: match.playerHero,
                     games: 1,
                     wins: match.result === 'won' ? 1 : 0,
                     loses: match.result === 'won' ? 0 : 1,
@@ -199,15 +278,15 @@ export default {
                     assists: match.assists,
                 };
             } else {
-                heroesObject[match.player_hero].games++;
-                match.result === 'won' ? heroesObject[match.player_hero].wins++ : heroesObject[match.player_hero].loses++;
-                heroesObject[match.player_hero].networth += match.networth;
-                heroesObject[match.player_hero].lasthits += match.lasthits;
-                heroesObject[match.player_hero].gpm += match.gpm;
-                heroesObject[match.player_hero].xpm += match.xpm;
-                heroesObject[match.player_hero].kills += match.kills;
-                heroesObject[match.player_hero].deaths += match.deaths;
-                heroesObject[match.player_hero].assists += match.assists;
+                heroesObject[match.playerHero].games++;
+                match.result === 'won' ? heroesObject[match.playerHero].wins++ : heroesObject[match.playerHero].loses++;
+                heroesObject[match.playerHero].networth += match.networth;
+                heroesObject[match.playerHero].lasthits += match.lasthits;
+                heroesObject[match.playerHero].gpm += match.gpm;
+                heroesObject[match.playerHero].xpm += match.xpm;
+                heroesObject[match.playerHero].kills += match.kills;
+                heroesObject[match.playerHero].deaths += match.deaths;
+                heroesObject[match.playerHero].assists += match.assists;
             }
         }
 
@@ -220,12 +299,18 @@ export default {
             }
             console.log(heroesObject[hero]);
             heroesObject[hero].winrate = heroesObject[hero].wins / heroesObject[hero].games;
-            this.heroes.push(heroesObject[hero]);
+            this.info.heroes.push(heroesObject[hero]);
         }
-        console.log(this.heroes);
+        console.log(this.info.heroes);
     },
 
-    dataSort(arr, param, relationOperator = '>') {
+    async getInfo() {
+        await this.getMatchesInfo();
+        this.setStatisticsData(this.info.matches);
+        this.setHeroesData(this.info.matches);
+    },
+
+    getSortedData(arr, param, relationOperator = '>') {
         if (relationOperator === '>') {
             arr.sort((a, b) => (a[param]) > (b[param]) ? 1 : -1);
         } else {

@@ -125,7 +125,7 @@
         <a class="navbar-anchor" name="matches-anchor"></a>
         <h2>Recent matches (25)</h2>
         <div class="responsive-table-container">
-            <table id="MatchesTable" class="table main-content__matches-table matches-table">
+            <table class="table main-content__matches-table matches-table">
                 <thead>
                     <th class="matches-table__th _text-muted match-info__num">
                         <button class="matches-table__sort-button">№</button>
@@ -161,7 +161,7 @@
                         <button class="matches-table__sort-button disabled" disabled>ID</button>
                     </th>
                 </thead>
-                <tbody>
+                <tbody id="matchesTable">
                     <tr class="matches-table__tr-start"></tr>
                     <template class="matches-table__template">
                         <tr class="match-info" style="width: 100%">
@@ -232,7 +232,7 @@
         <a class="navbar-anchor" name="heroes-anchor"></a>
         <h2>Recently played on heroes</h2>
         <div class="responsive-table-container">
-            <table id="HeroesTable" class="table main-content__heroes-table heroes-table">
+            <table class="table main-content__heroes-table heroes-table">
                 <thead>
                     <th class="heroes-table__th _text-muted heroes-info__num">
                         <button class="heroes-table__sort-button">№</button>
@@ -268,9 +268,9 @@
                         <button class="heroes-table__sort-button">Assists</button>
                     </th>
                 </thead>
-                <tbody>
+                <tbody id="heroesTable">
                     <tr class="heroes-table__tr-start"></tr>
-                    <template class="heroes-table__template">
+                    <!--<template class="heroes-table__template">
                         <tr class="heroes-info">
                             <td class="heroes-table__td heroes-info__hero" data-label="№">
                                 <div class="skeleton skeleton-text-14"></div>
@@ -306,7 +306,287 @@
                                 <div class="skeleton skeleton-text-14"></div>
                             </td>
                         </tr>
-                    </template>
+                    </template>-->
+                    <tr class="heroes-info">
+                        <td class="heroes-table__td heroes-info__hero" data-label="№">
+                            <div class="skeleton skeleton-text-14"></div>
+                        </td>
+                        <td class="heroes-table__td heroes-info__hero" data-label="Hero">
+                            <div class="skeleton" style="width: 32px; height: 32px; margin: auto;"></div>
+                        </td>
+                        <td class="heroes-table__td heroes-info__matches" data-label="Matches">
+                            <div class="skeleton skeleton-text-14"></div>
+                        </td>
+                        <td class="heroes-table__td heroes-info__winrate" data-label="Winrate">
+                            <div class="skeleton skeleton-text-14"></div>
+                        </td>
+                        <td class="heroes-table__td heroes-info__networth" data-label="Networth">
+                            <div class="skeleton skeleton-text-14"></div>
+                        </td>
+                        <td class="heroes-table__td heroes-info__lasthits" data-label="Lasthits">
+                            <div class="skeleton skeleton-text-14"></div>
+                        </td>
+                        <td class="heroes-table__td heroes-info__gpm" data-label="GPM (avg)">
+                            <div class="skeleton skeleton-text-14"></div>
+                        </td>
+                        <td class="heroes-table__td heroes-info__xpm" data-label="XPM (avg)">
+                            <div class="skeleton skeleton-text-14"></div>
+                        </td>
+                        <td class="heroes-table__td heroes-info__kills" data-label="Kills">
+                            <div class="skeleton skeleton-text-14"></div>
+                        </td>
+                        <td class="heroes-table__td heroes-info__deathes" data-label="Deathes">
+                            <div class="skeleton skeleton-text-14"></div>
+                        </td>
+                        <td class="heroes-table__td heroes-info__assists" data-label="Assists">
+                            <div class="skeleton skeleton-text-14"></div>
+                        </td>
+                    </tr>
+                    <tr class="heroes-info">
+                        <td class="heroes-table__td heroes-info__hero" data-label="№">
+                            <div class="skeleton skeleton-text-14"></div>
+                        </td>
+                        <td class="heroes-table__td heroes-info__hero" data-label="Hero">
+                            <div class="skeleton" style="width: 32px; height: 32px; margin: auto;"></div>
+                        </td>
+                        <td class="heroes-table__td heroes-info__matches" data-label="Matches">
+                            <div class="skeleton skeleton-text-14"></div>
+                        </td>
+                        <td class="heroes-table__td heroes-info__winrate" data-label="Winrate">
+                            <div class="skeleton skeleton-text-14"></div>
+                        </td>
+                        <td class="heroes-table__td heroes-info__networth" data-label="Networth">
+                            <div class="skeleton skeleton-text-14"></div>
+                        </td>
+                        <td class="heroes-table__td heroes-info__lasthits" data-label="Lasthits">
+                            <div class="skeleton skeleton-text-14"></div>
+                        </td>
+                        <td class="heroes-table__td heroes-info__gpm" data-label="GPM (avg)">
+                            <div class="skeleton skeleton-text-14"></div>
+                        </td>
+                        <td class="heroes-table__td heroes-info__xpm" data-label="XPM (avg)">
+                            <div class="skeleton skeleton-text-14"></div>
+                        </td>
+                        <td class="heroes-table__td heroes-info__kills" data-label="Kills">
+                            <div class="skeleton skeleton-text-14"></div>
+                        </td>
+                        <td class="heroes-table__td heroes-info__deathes" data-label="Deathes">
+                            <div class="skeleton skeleton-text-14"></div>
+                        </td>
+                        <td class="heroes-table__td heroes-info__assists" data-label="Assists">
+                            <div class="skeleton skeleton-text-14"></div>
+                        </td>
+                    </tr>
+                    <tr class="heroes-info">
+                        <td class="heroes-table__td heroes-info__hero" data-label="№">
+                            <div class="skeleton skeleton-text-14"></div>
+                        </td>
+                        <td class="heroes-table__td heroes-info__hero" data-label="Hero">
+                            <div class="skeleton" style="width: 32px; height: 32px; margin: auto;"></div>
+                        </td>
+                        <td class="heroes-table__td heroes-info__matches" data-label="Matches">
+                            <div class="skeleton skeleton-text-14"></div>
+                        </td>
+                        <td class="heroes-table__td heroes-info__winrate" data-label="Winrate">
+                            <div class="skeleton skeleton-text-14"></div>
+                        </td>
+                        <td class="heroes-table__td heroes-info__networth" data-label="Networth">
+                            <div class="skeleton skeleton-text-14"></div>
+                        </td>
+                        <td class="heroes-table__td heroes-info__lasthits" data-label="Lasthits">
+                            <div class="skeleton skeleton-text-14"></div>
+                        </td>
+                        <td class="heroes-table__td heroes-info__gpm" data-label="GPM (avg)">
+                            <div class="skeleton skeleton-text-14"></div>
+                        </td>
+                        <td class="heroes-table__td heroes-info__xpm" data-label="XPM (avg)">
+                            <div class="skeleton skeleton-text-14"></div>
+                        </td>
+                        <td class="heroes-table__td heroes-info__kills" data-label="Kills">
+                            <div class="skeleton skeleton-text-14"></div>
+                        </td>
+                        <td class="heroes-table__td heroes-info__deathes" data-label="Deathes">
+                            <div class="skeleton skeleton-text-14"></div>
+                        </td>
+                        <td class="heroes-table__td heroes-info__assists" data-label="Assists">
+                            <div class="skeleton skeleton-text-14"></div>
+                        </td>
+                    </tr>
+                    <tr class="heroes-info">
+                        <td class="heroes-table__td heroes-info__hero" data-label="№">
+                            <div class="skeleton skeleton-text-14"></div>
+                        </td>
+                        <td class="heroes-table__td heroes-info__hero" data-label="Hero">
+                            <div class="skeleton" style="width: 32px; height: 32px; margin: auto;"></div>
+                        </td>
+                        <td class="heroes-table__td heroes-info__matches" data-label="Matches">
+                            <div class="skeleton skeleton-text-14"></div>
+                        </td>
+                        <td class="heroes-table__td heroes-info__winrate" data-label="Winrate">
+                            <div class="skeleton skeleton-text-14"></div>
+                        </td>
+                        <td class="heroes-table__td heroes-info__networth" data-label="Networth">
+                            <div class="skeleton skeleton-text-14"></div>
+                        </td>
+                        <td class="heroes-table__td heroes-info__lasthits" data-label="Lasthits">
+                            <div class="skeleton skeleton-text-14"></div>
+                        </td>
+                        <td class="heroes-table__td heroes-info__gpm" data-label="GPM (avg)">
+                            <div class="skeleton skeleton-text-14"></div>
+                        </td>
+                        <td class="heroes-table__td heroes-info__xpm" data-label="XPM (avg)">
+                            <div class="skeleton skeleton-text-14"></div>
+                        </td>
+                        <td class="heroes-table__td heroes-info__kills" data-label="Kills">
+                            <div class="skeleton skeleton-text-14"></div>
+                        </td>
+                        <td class="heroes-table__td heroes-info__deathes" data-label="Deathes">
+                            <div class="skeleton skeleton-text-14"></div>
+                        </td>
+                        <td class="heroes-table__td heroes-info__assists" data-label="Assists">
+                            <div class="skeleton skeleton-text-14"></div>
+                        </td>
+                    </tr>
+                    <tr class="heroes-info">
+                        <td class="heroes-table__td heroes-info__hero" data-label="№">
+                            <div class="skeleton skeleton-text-14"></div>
+                        </td>
+                        <td class="heroes-table__td heroes-info__hero" data-label="Hero">
+                            <div class="skeleton" style="width: 32px; height: 32px; margin: auto;"></div>
+                        </td>
+                        <td class="heroes-table__td heroes-info__matches" data-label="Matches">
+                            <div class="skeleton skeleton-text-14"></div>
+                        </td>
+                        <td class="heroes-table__td heroes-info__winrate" data-label="Winrate">
+                            <div class="skeleton skeleton-text-14"></div>
+                        </td>
+                        <td class="heroes-table__td heroes-info__networth" data-label="Networth">
+                            <div class="skeleton skeleton-text-14"></div>
+                        </td>
+                        <td class="heroes-table__td heroes-info__lasthits" data-label="Lasthits">
+                            <div class="skeleton skeleton-text-14"></div>
+                        </td>
+                        <td class="heroes-table__td heroes-info__gpm" data-label="GPM (avg)">
+                            <div class="skeleton skeleton-text-14"></div>
+                        </td>
+                        <td class="heroes-table__td heroes-info__xpm" data-label="XPM (avg)">
+                            <div class="skeleton skeleton-text-14"></div>
+                        </td>
+                        <td class="heroes-table__td heroes-info__kills" data-label="Kills">
+                            <div class="skeleton skeleton-text-14"></div>
+                        </td>
+                        <td class="heroes-table__td heroes-info__deathes" data-label="Deathes">
+                            <div class="skeleton skeleton-text-14"></div>
+                        </td>
+                        <td class="heroes-table__td heroes-info__assists" data-label="Assists">
+                            <div class="skeleton skeleton-text-14"></div>
+                        </td>
+                    </tr>
+                    <tr class="heroes-info">
+                        <td class="heroes-table__td heroes-info__hero" data-label="№">
+                            <div class="skeleton skeleton-text-14"></div>
+                        </td>
+                        <td class="heroes-table__td heroes-info__hero" data-label="Hero">
+                            <div class="skeleton" style="width: 32px; height: 32px; margin: auto;"></div>
+                        </td>
+                        <td class="heroes-table__td heroes-info__matches" data-label="Matches">
+                            <div class="skeleton skeleton-text-14"></div>
+                        </td>
+                        <td class="heroes-table__td heroes-info__winrate" data-label="Winrate">
+                            <div class="skeleton skeleton-text-14"></div>
+                        </td>
+                        <td class="heroes-table__td heroes-info__networth" data-label="Networth">
+                            <div class="skeleton skeleton-text-14"></div>
+                        </td>
+                        <td class="heroes-table__td heroes-info__lasthits" data-label="Lasthits">
+                            <div class="skeleton skeleton-text-14"></div>
+                        </td>
+                        <td class="heroes-table__td heroes-info__gpm" data-label="GPM (avg)">
+                            <div class="skeleton skeleton-text-14"></div>
+                        </td>
+                        <td class="heroes-table__td heroes-info__xpm" data-label="XPM (avg)">
+                            <div class="skeleton skeleton-text-14"></div>
+                        </td>
+                        <td class="heroes-table__td heroes-info__kills" data-label="Kills">
+                            <div class="skeleton skeleton-text-14"></div>
+                        </td>
+                        <td class="heroes-table__td heroes-info__deathes" data-label="Deathes">
+                            <div class="skeleton skeleton-text-14"></div>
+                        </td>
+                        <td class="heroes-table__td heroes-info__assists" data-label="Assists">
+                            <div class="skeleton skeleton-text-14"></div>
+                        </td>
+                    </tr>
+                    <tr class="heroes-info">
+                        <td class="heroes-table__td heroes-info__hero" data-label="№">
+                            <div class="skeleton skeleton-text-14"></div>
+                        </td>
+                        <td class="heroes-table__td heroes-info__hero" data-label="Hero">
+                            <div class="skeleton" style="width: 32px; height: 32px; margin: auto;"></div>
+                        </td>
+                        <td class="heroes-table__td heroes-info__matches" data-label="Matches">
+                            <div class="skeleton skeleton-text-14"></div>
+                        </td>
+                        <td class="heroes-table__td heroes-info__winrate" data-label="Winrate">
+                            <div class="skeleton skeleton-text-14"></div>
+                        </td>
+                        <td class="heroes-table__td heroes-info__networth" data-label="Networth">
+                            <div class="skeleton skeleton-text-14"></div>
+                        </td>
+                        <td class="heroes-table__td heroes-info__lasthits" data-label="Lasthits">
+                            <div class="skeleton skeleton-text-14"></div>
+                        </td>
+                        <td class="heroes-table__td heroes-info__gpm" data-label="GPM (avg)">
+                            <div class="skeleton skeleton-text-14"></div>
+                        </td>
+                        <td class="heroes-table__td heroes-info__xpm" data-label="XPM (avg)">
+                            <div class="skeleton skeleton-text-14"></div>
+                        </td>
+                        <td class="heroes-table__td heroes-info__kills" data-label="Kills">
+                            <div class="skeleton skeleton-text-14"></div>
+                        </td>
+                        <td class="heroes-table__td heroes-info__deathes" data-label="Deathes">
+                            <div class="skeleton skeleton-text-14"></div>
+                        </td>
+                        <td class="heroes-table__td heroes-info__assists" data-label="Assists">
+                            <div class="skeleton skeleton-text-14"></div>
+                        </td>
+                    </tr>
+                    <tr class="heroes-info">
+                        <td class="heroes-table__td heroes-info__hero" data-label="№">
+                            <div class="skeleton skeleton-text-14"></div>
+                        </td>
+                        <td class="heroes-table__td heroes-info__hero" data-label="Hero">
+                            <div class="skeleton" style="width: 32px; height: 32px; margin: auto;"></div>
+                        </td>
+                        <td class="heroes-table__td heroes-info__matches" data-label="Matches">
+                            <div class="skeleton skeleton-text-14"></div>
+                        </td>
+                        <td class="heroes-table__td heroes-info__winrate" data-label="Winrate">
+                            <div class="skeleton skeleton-text-14"></div>
+                        </td>
+                        <td class="heroes-table__td heroes-info__networth" data-label="Networth">
+                            <div class="skeleton skeleton-text-14"></div>
+                        </td>
+                        <td class="heroes-table__td heroes-info__lasthits" data-label="Lasthits">
+                            <div class="skeleton skeleton-text-14"></div>
+                        </td>
+                        <td class="heroes-table__td heroes-info__gpm" data-label="GPM (avg)">
+                            <div class="skeleton skeleton-text-14"></div>
+                        </td>
+                        <td class="heroes-table__td heroes-info__xpm" data-label="XPM (avg)">
+                            <div class="skeleton skeleton-text-14"></div>
+                        </td>
+                        <td class="heroes-table__td heroes-info__kills" data-label="Kills">
+                            <div class="skeleton skeleton-text-14"></div>
+                        </td>
+                        <td class="heroes-table__td heroes-info__deathes" data-label="Deathes">
+                            <div class="skeleton skeleton-text-14"></div>
+                        </td>
+                        <td class="heroes-table__td heroes-info__assists" data-label="Assists">
+                            <div class="skeleton skeleton-text-14"></div>
+                        </td>
+                    </tr>
                     <tr class="heroes-table__tr-end"></tr>
                 </tbody>
             </table>

@@ -2,46 +2,44 @@ import view from "./view.mjs";
 import model from "./model.mjs";
 
 export default {
-    init() {
+    async init() {
         view.renderPlaceholders();
         model.getProfileInfo()
             .then((profileInfo) => {
                 view.renderProfile(profileInfo);
             });
-        model.getMatchesInfo()
-            .then((matchesInfo) => {
-                view.renderStats(matchesInfo);
-                view.renderMatches(matchesInfo);
-                model.setHeroesData(matchesInfo);
-                view.renderHeroes(model.heroes);
-                this.bindEvents(matchesInfo);
-            })
+        await model.getInfo();
+        view.renderStats(model.info.statistics);
+        view.renderMatches(model.info.matches);
+        view.renderHeroes(model.info.heroes);
+        this.bindEvents(model.info.matches);
+        this.bindMatchesSortButtons(model.info.matches);
+        this.bindHeroesSortButtons();
+        this.bindCopyMatchIdButtons();
     },
 
     bindEvents(data) {
-        const initialMatchesData = [];
-        const initialHeroesData = [];
-
-        for (const hero of model.heroes) {
-            initialHeroesData.push(hero);
-        }
-
-        for (const match of data) {
-            initialMatchesData.push(match);
-        }
-
         view.openNavButton.addEventListener('click', view.openNav);
         view.profileAnchor.addEventListener('click', view.openNav);
         view.matchesAnchor.addEventListener('click', view.openNav);
         view.heroesAnchor.addEventListener('click', view.openNav);
         view.statisticsAnchor.addEventListener('click', view.openNav);
-        window.addEventListener('scroll', () => { view.toTop(view.buttonToTop, view.buttonToTopMark); });
+        window.addEventListener('scroll', () => { view.buttonToTopClassToggler(view.buttonToTop, view.buttonToTopMark); });
         view.buttonToTop.addEventListener('click', () => {
             view.scrollToTop();
         })
+    },
+
+    bindMatchesSortButtons(data) {
+        const initialMatchesData = [];
+
+        for (const match of data) {
+            initialMatchesData.push(match);
+        }
+
         const matchesColumnsMap = {
-            initial: 0,
-            player_hero: 1,
+            numeration: 0,
+            playerHero: 1,
             result: 2,
             networth: 4,
             kda: 5,
@@ -50,68 +48,61 @@ export default {
             duration: 9,
         };
 
-        view.matchesSortButtonsArray[matchesColumnsMap.initial].addEventListener('click', () => {
-            if (!view.matchesSortButtonsArray[matchesColumnsMap.initial].classList.contains('pressed')) {
-                view.pressButtonMatches(matchesColumnsMap.initial);
-                view.renderMatches(initialMatchesData);
-            }
+        view.matchesSortButtons[matchesColumnsMap.numeration].addEventListener('click', () => {
+            if (view.matchesSortButtons[matchesColumnsMap.numeration].classList.contains('active')) return;
+            view.handleSortMatches(matchesColumnsMap.numeration);
+            view.renderMatches(initialMatchesData);
         })
-        view.matchesSortButtonsArray[matchesColumnsMap.player_hero].addEventListener('click', () => {
-            if (!view.matchesSortButtonsArray[matchesColumnsMap.player_hero].classList.contains('pressed')) {
-                view.pressButtonMatches(matchesColumnsMap.player_hero);
-                const sortedRows = model.dataSort(data, 'player_hero', '>');
-                console.log(sortedRows);
-                view.renderMatches(sortedRows);
-            }
+        view.matchesSortButtons[matchesColumnsMap.playerHero].addEventListener('click', () => {
+            if (view.matchesSortButtons[matchesColumnsMap.playerHero].classList.contains('active')) return;
+            view.handleSortMatches(matchesColumnsMap.playerHero);
+            const sortedRows = model.getSortedData(data, 'player_hero', '>');
+            view.renderMatches(sortedRows);
         });
-        view.matchesSortButtonsArray[matchesColumnsMap.result].addEventListener('click', () => {
-            if (!view.matchesSortButtonsArray[matchesColumnsMap.result].classList.contains('pressed')) {
-                view.pressButtonMatches(matchesColumnsMap.result);
-                const sortedRows = model.dataSort(data, 'result', '<');
-                console.log(sortedRows);
-                view.renderMatches(sortedRows);
-            }
+        view.matchesSortButtons[matchesColumnsMap.result].addEventListener('click', () => {
+            if (view.matchesSortButtons[matchesColumnsMap.result].classList.contains('active')) return;
+            view.handleSortMatches(matchesColumnsMap.result);
+            const sortedRows = model.getSortedData(data, 'result', '<');
+            view.renderMatches(sortedRows);
         });
-        view.matchesSortButtonsArray[matchesColumnsMap.networth].addEventListener('click', () => {
-            if (!view.matchesSortButtonsArray[matchesColumnsMap.networth].classList.contains('pressed')) {
-                view.pressButtonMatches(matchesColumnsMap.networth);
-                const sortedRows = model.dataSort(data, 'networth', '<');
-                console.log(sortedRows);
-                view.renderMatches(sortedRows);
-            }
+        view.matchesSortButtons[matchesColumnsMap.networth].addEventListener('click', () => {
+            if (view.matchesSortButtons[matchesColumnsMap.networth].classList.contains('active')) return;
+            view.handleSortMatches(matchesColumnsMap.networth);
+            const sortedRows = model.getSortedData(data, 'networth', '<');
+            view.renderMatches(sortedRows);
         });
-        view.matchesSortButtonsArray[matchesColumnsMap.kda].addEventListener('click', () => {
-            if (!view.matchesSortButtonsArray[matchesColumnsMap.kda].classList.contains('pressed')) {
-                view.pressButtonMatches(matchesColumnsMap.kda);
-                const sortedRows = model.dataSort(data, 'kda', '>');
-                console.log(sortedRows);
-                view.renderMatches(sortedRows);
-            }
+        view.matchesSortButtons[matchesColumnsMap.kda].addEventListener('click', () => {
+            if (view.matchesSortButtons[matchesColumnsMap.kda].classList.contains('active')) return;
+            view.handleSortMatches(matchesColumnsMap.kda);
+            const sortedRows = model.getSortedData(data, 'kda', '>');
+            view.renderMatches(sortedRows);
         });
-        view.matchesSortButtonsArray[matchesColumnsMap.gpm].addEventListener('click', () => {
-            if (!view.matchesSortButtonsArray[matchesColumnsMap.gpm].classList.contains('pressed')) {
-                view.pressButtonMatches(matchesColumnsMap.gpm);
-                const sortedRows = model.dataSort(data, 'gpm', '<');
-                console.log(sortedRows);
-                view.renderMatches(sortedRows);
-            }
+        view.matchesSortButtons[matchesColumnsMap.gpm].addEventListener('click', () => {
+            if (view.matchesSortButtons[matchesColumnsMap.gpm].classList.contains('active')) return;
+            view.handleSortMatches(matchesColumnsMap.gpm);
+            const sortedRows = model.getSortedData(data, 'gpm', '<');
+            view.renderMatches(sortedRows);
         });
-        view.matchesSortButtonsArray[matchesColumnsMap.xpm].addEventListener('click', () => {
-            if (!view.matchesSortButtonsArray[matchesColumnsMap.xpm].classList.contains('pressed')) {
-                view.pressButtonMatches(matchesColumnsMap.xpm);
-                const sortedRows = model.dataSort(data, 'xpm', '<');
-                console.log(sortedRows);
-                view.renderMatches(sortedRows);
-            }
+        view.matchesSortButtons[matchesColumnsMap.xpm].addEventListener('click', () => {
+            if (view.matchesSortButtons[matchesColumnsMap.xpm].classList.contains('active')) return;
+            view.handleSortMatches(matchesColumnsMap.xpm);
+            const sortedRows = model.getSortedData(data, 'xpm', '<');
+            view.renderMatches(sortedRows);
         });
-        view.matchesSortButtonsArray[matchesColumnsMap.duration].addEventListener('click', () => {
-            if (!view.matchesSortButtonsArray[matchesColumnsMap.duration].classList.contains('pressed')) {
-                view.pressButtonMatches(matchesColumnsMap.duration);
-                const sortedRows = model.dataSort(data, 'duration', '<');
-                console.log(sortedRows);
-                view.renderMatches(sortedRows);
-            }
+        view.matchesSortButtons[matchesColumnsMap.duration].addEventListener('click', () => {
+            if (view.matchesSortButtons[matchesColumnsMap.duration].classList.contains('active')) return;
+            view.handleSortMatches(matchesColumnsMap.duration);
+            const sortedRows = model.getSortedData(data, 'duration', '<');
+            view.renderMatches(sortedRows);
         });
+    },
+
+    bindHeroesSortButtons() {
+        const initialHeroesData = [];
+
+        for (const hero of model.info.heroes) {
+            initialHeroesData.push(hero);
+        }
 
         const heroesColumnsMap = {
             initial: 0,
@@ -127,94 +118,75 @@ export default {
             assists: 10
         };
 
-        console.log(view.heroesSortButtonsArray);
-        view.heroesSortButtonsArray[heroesColumnsMap.initial].addEventListener('click', () => {
-            if (!view.heroesSortButtonsArray[heroesColumnsMap.initial].classList.contains('pressed')) {
-                view.pressButtonHeroes(heroesColumnsMap.initial);
-                view.renderHeroes(initialHeroesData);
-            }
+        console.log(view.heroesSortButtons);
+        view.heroesSortButtons[heroesColumnsMap.initial].addEventListener('click', () => {
+            if (view.heroesSortButtons[heroesColumnsMap.initial].classList.contains('active')) return;
+            view.handleSortHeroes(heroesColumnsMap.initial);
+            view.renderHeroes(initialHeroesData);
         })
-        view.heroesSortButtonsArray[heroesColumnsMap.hero].addEventListener('click', () => {
-            if (!view.heroesSortButtonsArray[heroesColumnsMap.hero].classList.contains('pressed')) {
-                view.pressButtonHeroes(heroesColumnsMap.hero);
-                const sortedRows = model.dataSort(model.heroes, 'hero', '>');
-                console.log(sortedRows);
-                view.renderHeroes(sortedRows);
-            }
+        view.heroesSortButtons[heroesColumnsMap.hero].addEventListener('click', () => {
+            if (view.heroesSortButtons[heroesColumnsMap.hero].classList.contains('active')) return;
+            view.handleSortHeroes(heroesColumnsMap.hero);
+            const sortedRows = model.getSortedData(model.heroes, 'hero', '>');
+            view.renderHeroes(sortedRows);
         });
-        view.heroesSortButtonsArray[heroesColumnsMap.games].addEventListener('click', () => {
-            if (!view.heroesSortButtonsArray[heroesColumnsMap.games].classList.contains('pressed')) {
-                view.pressButtonHeroes(heroesColumnsMap.games);
-                const sortedRows = model.dataSort(model.heroes, 'games', '<');
-                console.log(sortedRows);
-                view.renderHeroes(sortedRows);
-            }
+        view.heroesSortButtons[heroesColumnsMap.games].addEventListener('click', () => {
+            if (view.heroesSortButtons[heroesColumnsMap.games].classList.contains('active')) return;
+            view.handleSortHeroes(heroesColumnsMap.games);
+            const sortedRows = model.getSortedData(model.heroes, 'games', '<');
+            view.renderHeroes(sortedRows);
         });
-        view.heroesSortButtonsArray[heroesColumnsMap.winrate].addEventListener('click', () => {
-            if (!view.heroesSortButtonsArray[heroesColumnsMap.winrate].classList.contains('pressed')) {
-                view.pressButtonHeroes(heroesColumnsMap.winrate);
-                const sortedRows = model.dataSort(model.heroes, 'winrate', '<');
-                console.log(sortedRows);
-                view.renderHeroes(sortedRows);
-            }
+        view.heroesSortButtons[heroesColumnsMap.winrate].addEventListener('click', () => {
+            if (view.heroesSortButtons[heroesColumnsMap.winrate].classList.contains('active')) return;
+            view.handleSortHeroes(heroesColumnsMap.winrate);
+            const sortedRows = model.getSortedData(model.heroes, 'winrate', '<');
+            view.renderHeroes(sortedRows);
         });
-        view.heroesSortButtonsArray[heroesColumnsMap.networth].addEventListener('click', () => {
-            if (!view.heroesSortButtonsArray[heroesColumnsMap.networth].classList.contains('pressed')) {
-                view.pressButtonHeroes(heroesColumnsMap.networth);
-                const sortedRows = model.dataSort(model.heroes, 'networth', '<');
-                console.log(sortedRows);
-                view.renderHeroes(sortedRows);
-            }
+        view.heroesSortButtons[heroesColumnsMap.networth].addEventListener('click', () => {
+            if (view.heroesSortButtons[heroesColumnsMap.networth].classList.contains('active')) return;
+            view.handleSortHeroes(heroesColumnsMap.networth);
+            const sortedRows = model.getSortedData(model.heroes, 'networth', '<');
+            view.renderHeroes(sortedRows);
         });
-        view.heroesSortButtonsArray[heroesColumnsMap.lasthits].addEventListener('click', () => {
-            if (!view.heroesSortButtonsArray[heroesColumnsMap.lasthits].classList.contains('pressed')) {
-                view.pressButtonHeroes(heroesColumnsMap.lasthits);
-                const sortedRows = model.dataSort(model.heroes, 'lasthits', '<');
-                console.log(sortedRows);
-                view.renderHeroes(sortedRows);
-            }
+        view.heroesSortButtons[heroesColumnsMap.lasthits].addEventListener('click', () => {
+            if (view.heroesSortButtons[heroesColumnsMap.lasthits].classList.contains('active')) return;
+            view.handleSortHeroes(heroesColumnsMap.lasthits);
+            const sortedRows = model.getSortedData(model.heroes, 'lasthits', '<');
+            view.renderHeroes(sortedRows);
         });
-        view.heroesSortButtonsArray[heroesColumnsMap.gpm].addEventListener('click', () => {
-            if (!view.heroesSortButtonsArray[heroesColumnsMap.gpm].classList.contains('pressed')) {
-                view.pressButtonHeroes(heroesColumnsMap.gpm);
-                const sortedRows = model.dataSort(model.heroes, 'gpm', '<');
-                console.log(sortedRows);
-                view.renderHeroes(sortedRows);
-            }
+        view.heroesSortButtons[heroesColumnsMap.gpm].addEventListener('click', () => {
+            if (view.heroesSortButtons[heroesColumnsMap.gpm].classList.contains('active')) return;
+            view.handleSortHeroes(heroesColumnsMap.gpm);
+            const sortedRows = model.getSortedData(model.heroes, 'gpm', '<');
+            view.renderHeroes(sortedRows);
         });
-        view.heroesSortButtonsArray[heroesColumnsMap.xpm].addEventListener('click', () => {
-            if (!view.heroesSortButtonsArray[heroesColumnsMap.xpm].classList.contains('pressed')) {
-                view.pressButtonHeroes(heroesColumnsMap.xpm);
-                const sortedRows = model.dataSort(model.heroes, 'xpm', '<');
-                console.log(sortedRows);
-                view.renderHeroes(sortedRows);
-            }
+        view.heroesSortButtons[heroesColumnsMap.xpm].addEventListener('click', () => {
+            if (view.heroesSortButtons[heroesColumnsMap.xpm].classList.contains('active')) return;
+            view.handleSortHeroes(heroesColumnsMap.xpm);
+            const sortedRows = model.getSortedData(model.heroes, 'xpm', '<');
+            view.renderHeroes(sortedRows);
         });
-        view.heroesSortButtonsArray[heroesColumnsMap.kills].addEventListener('click', () => {
-            if (!view.heroesSortButtonsArray[heroesColumnsMap.kills].classList.contains('pressed')) {
-                view.pressButtonHeroes(heroesColumnsMap.kills);
-                const sortedRows = model.dataSort(model.heroes, 'kills', '<');
-                console.log(sortedRows);
-                view.renderHeroes(sortedRows);
-            }
+        view.heroesSortButtons[heroesColumnsMap.kills].addEventListener('click', () => {
+            if (view.heroesSortButtons[heroesColumnsMap.kills].classList.contains('active')) return;
+            view.handleSortHeroes(heroesColumnsMap.kills);
+            const sortedRows = model.getSortedData(model.heroes, 'kills', '<');
+            view.renderHeroes(sortedRows);
         });
-        view.heroesSortButtonsArray[heroesColumnsMap.deaths].addEventListener('click', () => {
-            if (!view.heroesSortButtonsArray[heroesColumnsMap.deaths].classList.contains('pressed')) {
-                view.pressButtonHeroes(heroesColumnsMap.deaths);
-                const sortedRows = model.dataSort(model.heroes, 'deaths', '>');
-                console.log(sortedRows);
-                view.renderHeroes(sortedRows);
-            }
+        view.heroesSortButtons[heroesColumnsMap.deaths].addEventListener('click', () => {
+            if (view.heroesSortButtons[heroesColumnsMap.deaths].classList.contains('active')) return;
+            view.handleSortHeroes(heroesColumnsMap.deaths);
+            const sortedRows = model.getSortedData(model.heroes, 'deaths', '>');
+            view.renderHeroes(sortedRows);
         });
-        view.heroesSortButtonsArray[heroesColumnsMap.assists].addEventListener('click', () => {
-            if (!view.heroesSortButtonsArray[heroesColumnsMap.assists].classList.contains('pressed')) {
-                view.pressButtonHeroes(heroesColumnsMap.assists);
-                const sortedRows = model.dataSort(model.heroes, 'assists', '<');
-                console.log(sortedRows);
-                view.renderHeroes(sortedRows);
-            }
+        view.heroesSortButtons[heroesColumnsMap.assists].addEventListener('click', () => {
+            if (view.heroesSortButtons[heroesColumnsMap.assists].classList.contains('active')) return;
+            view.handleSortHeroes(heroesColumnsMap.assists);
+            const sortedRows = model.getSortedData(model.heroes, 'assists', '<');
+            view.renderHeroes(sortedRows);
         });
+    },
 
+    bindCopyMatchIdButtons() {
         for (const button of view.matchIdCopyArray) {
             button.addEventListener('click', () => {
                 view.copyIdToClipboard(button);
