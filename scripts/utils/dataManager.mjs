@@ -1,11 +1,4 @@
 import {
-    PLAYER_ID,
-    GET_PROFILE_INFO_URL,
-    GET_MATCHES_HISTORY_URL,
-    GET_MATCH_DETAILS_URL,
-    OPENDOTA_REQUEST_OPTIONS,
-    RAPID_API_REQUEST_OPTIONS,
-    RAPID_API_MATCHES_URL_PARAMS,
     buildUrlWithParams,
 } from "../api/api.mjs"
 

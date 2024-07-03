@@ -1,4 +1,4 @@
-import { RAPID_API_MATCHES_URL_PARAMS } from "../../api/api.mjs";
+import { HEROES_ICONS_URL, ITEMS_ICONS_URL } from "../../api/api.mjs";
 
 export default {
     matchesTemplate: document.querySelector('.matches-table__template'),
@@ -46,16 +46,7 @@ export default {
     },
 
     copyIdToClipboard(button) {
-        let temp = document.createElement('textarea');
-        temp.style.position = "fixed";
-        temp.style.opcity = "0";
-        temp.textContent = button.getAttribute("data-label");
-        console.log(button.getAttribute("data-label"));
-
-        document.body.appendChild(temp);
-        temp.select();
-        document.execCommand('copy');
-        document.body.removeChild(temp);
+        navigator.clipboard.writeText(button.getAttribute("data-label"));
     },
 
     handleSortMatches(buttonIndex) {
@@ -78,6 +69,20 @@ export default {
         this.heroesLastPressedIndex = buttonIndex;
     },
 
+    loadImageWithSkeleton(imgElement, src, width = 24, height = 24) {
+        const skeleton = document.createElement('div');
+        skeleton.className = 'skeleton';
+        skeleton.style.cssText = `width: ${width}px; height: ${height}px; margin: 2px;`;
+        imgElement.parentNode.insertBefore(skeleton, imgElement);
+        imgElement.style.display = 'none';
+    
+        imgElement.src = src;
+        imgElement.onload = () => {
+            skeleton.remove();
+            imgElement.style.display = '';
+        };
+    },
+
     renderProfile(data) {
         const profileInfo = document.getElementsByClassName('profile-info')[0];
 
@@ -86,7 +91,7 @@ export default {
         <div class="profile-info__content profile-content">
             <div class="profile-content__buttons profile-buttons">
                 <a class="profile-buttons__title">${data.personaname}</a>
-                <a class="profile-buttons__picture" href="https://steamcommunity.com/profiles/${RAPID_API_MATCHES_URL_PARAMS.account_id}/" target="blank"><img src="image/steam_icon.png" alt=""></a>
+                <a class="profile-buttons__picture" href="https://steamcommunity.com/profiles/${data.steam_id}/" target="blank"><img src="image/steam_icon.png" alt=""></a>
             </div>
             <div class="profile-info__stats stats">
                 <div class="stats__container wins">
@@ -120,7 +125,6 @@ export default {
     },
 
     renderStats(data) {
-        console.log(data);
         const Stats = document.getElementsByClassName('recently-played')[0];
         Stats.innerHTML = `
         <ul class="recently-played__list recent-matches-list">
@@ -139,7 +143,7 @@ export default {
                     <p class="_text-succes">
                         ${data.average.kills}
                         <span class="_text-muted">${data.max.kills.value}</span>
-                        <img src="image/minimap_icons/${data.max.kills.heroImg}" alt="">
+                        <img src="${HEROES_ICONS_URL}/${data.max.kills.hero.icon}" alt="">
                     </p>
                 </li>
                 <li class="recent-matches-list__item ">
@@ -149,7 +153,7 @@ export default {
                     <p class="_text-danger">
                         ${data.average.deaths}
                         <span class="_text-muted">${data.max.deaths.value}</span>
-                        <img src="image/minimap_icons/${data.max.deaths.heroImg}" alt="">
+                        <img src="${HEROES_ICONS_URL}/${data.max.deaths.hero.icon}" alt="">
                     </p>
                 </li>
                 <li class="recent-matches-list__item ">
@@ -159,7 +163,7 @@ export default {
                     <p>
                         ${data.average.assists}
                         <span class="_text-muted">${data.max.assists.value}</span>
-                        <img src="image/minimap_icons/${data.max.assists.heroImg}" alt="">
+                        <img src="${HEROES_ICONS_URL}/${data.max.assists.hero.icon}" alt="">
                     </p>
                 </li>
                 <li class="recent-matches-list__item ">
@@ -169,7 +173,7 @@ export default {
                     <p>
                         ${data.average.gpm > 1000 ? (data.average.gpm / 1000).toFixed(1) + 'k' : data.average.gpm}
                         <span class="_text-muted">${data.max.gpm.value > 1000 ? (data.max.gpm.value / 1000).toFixed(1) + 'k' : data.max.gpm.value}</span>
-                        <img src="image/minimap_icons/${data.max.gpm.heroImg}" alt="">
+                        <img src="${HEROES_ICONS_URL}/${data.max.gpm.hero.icon}" alt="">
                     </p>
                 </li>
                 <li class="recent-matches-list__item ">
@@ -179,7 +183,7 @@ export default {
                     <p>
                         ${data.average.xpm > 1000 ? (data.average.xpm / 1000).toFixed(1) + 'k' : data.average.xpm}
                         <span class="_text-muted">${data.max.xpm.value > 1000 ? (data.max.xpm.value / 1000).toFixed(1) + 'k' : data.max.xpm.value}</span>
-                        <img src="image/minimap_icons/${data.max.xpm.heroImg}" alt="">
+                        <img src="${HEROES_ICONS_URL}/${data.max.xpm.hero.icon}" alt="">
                     </p>
                 </li>
                 <li class="recent-matches-list__item ">
@@ -189,7 +193,7 @@ export default {
                     <p>
                         ${data.average.lasthits > 1000 ? (data.average.lasthits / 1000).toFixed(1) + 'k' : data.average.lasthits}
                         <span class="_text-muted">${data.max.lasthits.value > 1000 ? (data.max.lasthits.value / 1000).toFixed(1) + 'k' : data.max.lasthits.value}</span>
-                        <img src="image/minimap_icons/${data.max.lasthits.heroImg}" alt="">
+                        <img src="${HEROES_ICONS_URL}/${data.max.lasthits.hero.icon}" alt="">
                     </p>
                 </li>
                 <li class="recent-matches-list__item ">
@@ -199,7 +203,7 @@ export default {
                     <p>
                         ${data.average.heroes_damage > 1000 ? (data.average.heroes_damage / 1000).toFixed(1) + 'k' : data.average.heroes_damage}
                         <span class="_text-muted">${data.max.heroes_damage.value > 1000 ? (data.max.heroes_damage.value / 1000).toFixed(1) + 'k' : data.max.heroes_damage.value}</span>
-                        <img src="image/minimap_icons/${data.max.heroes_damage.heroImg}" alt="">
+                        <img src="${HEROES_ICONS_URL}/${data.max.heroes_damage.hero.icon}" alt="">
                     </p>
                 </li>
                 <li class="recent-matches-list__item ">
@@ -209,7 +213,7 @@ export default {
                     <p>
                         ${data.average.allies_heal > 1000 ? (data.average.allies_heal / 1000).toFixed(1) + 'k' : data.average.allies_heal}
                         <span class="_text-muted">${data.max.allies_heal.value > 1000 ? (data.max.allies_heal.value / 1000).toFixed(1) + 'k' : data.max.allies_heal.value}</span>
-                        <img src="image/minimap_icons/${data.max.allies_heal.heroImg}" alt="">
+                        <img src="${HEROES_ICONS_URL}/${data.max.allies_heal.hero.icon}" alt="">
                     </p>
                 </li>
                 <li class="recent-matches-list__item ">
@@ -219,7 +223,7 @@ export default {
                     <p>
                         ${data.average.tower_damage > 1000 ? (data.average.tower_damage / 1000).toFixed(1) + 'k' : data.average.tower_damage}
                         <span class="_text-muted">${data.max.tower_damage.value > 1000 ? (data.max.tower_damage.value / 1000).toFixed(1) + 'k' : data.max.tower_damage.value}</span>
-                        <img src="image/minimap_icons/${data.max.tower_damage.heroImg}" alt="${data.max.tower_damage.heroImg}">
+                        <img src="${HEROES_ICONS_URL}/${data.max.tower_damage.hero.icon}" alt="${data.max.tower_damage.hero.icon}">
                     </p>
                 </li>
                 <li class="recent-matches-list__item ">
@@ -229,7 +233,7 @@ export default {
                     <p>
                         ${Math.floor(data.average.duration / 60) + ':' + data.average.duration % 60}
                         <span class="_text-muted">${Math.floor(data.max.duration.value / 60) + ':' + data.max.duration.value % 60}</span>
-                        <img src="image/minimap_icons/${data.max.duration.heroImg}" alt="${data.max.duration.heroImg}">
+                        <img src="${HEROES_ICONS_URL}/${data.max.duration.hero.icon}" alt="${data.max.duration.hero.icon}">
                     </p>
                 </li>
             </ul>`;
@@ -237,7 +241,6 @@ export default {
 
     renderMatches(data) {
         this.matchesTable.innerHTML = `<tr class="matches-table__tr-start"></tr>`;
-        console.log(this.matchesTable);
         let iterator = 0;
         for (const match of data) {
             const current_tr = document.createElement('tr');
@@ -249,30 +252,29 @@ export default {
                     ${iterator + 1}
                 </td>
                 <td class="matches-table__td match-info__hero" data-label="Hero">
-                    <a href="https://dota2.fandom.com/wiki/${match.playerHero.slice(0, -18)}" target="blank">
-                        <img src="image/minimap_icons/${match.playerHero}"></img>
+                    <a href="https://dota2.fandom.com/wiki/${match.player_hero.localized_name}" target="blank">
+                        <img alt="${match.player_hero.localized_name}">
                     </a>
                 </td>
                 <td class="matches-table__td match-info__result" data-label="Result">
                     <div>
                         <span>team_${match.playerTeam}: </span>
-                        <span class="${match.result === 'won' ? "_text-succes" : "_text-danger"}">${match.result}</span></div>
+                        <span class="${match.result === 'won' ? "_text-succes" : "_text-danger"}">${match.result}</span>
+                    </div>
                 </td>
                 <td class="matches-table__td match-info__draft" data-label="Draft">
                     <div class="draft">
                         <div class="team team-radiant">
-                            <img class="${match.draft[0] === match.playerHero ? "player-hero" : ""}" src = "image/minimap_icons/${match.draft[0]}"></img>
-                            <img class="${match.draft[1] === match.playerHero ? "player-hero" : ""}" src = "image/minimap_icons/${match.draft[1]}"></img>
-                            <img class="${match.draft[2] === match.playerHero ? "player-hero" : ""}" src = "image/minimap_icons/${match.draft[2]}"></img>
-                            <img class="${match.draft[3] === match.playerHero ? "player-hero" : ""}" src = "image/minimap_icons/${match.draft[3]}"></img>
-                            <img class="${match.draft[4] === match.playerHero ? "player-hero" : ""}" src = "image/minimap_icons/${match.draft[4]}"></img>
+                            ${match.draft.slice(0, 5).map((hero, index) => `
+                                <img class="${hero === match.player_hero ? "player-hero" : ""}" 
+                                     alt="Hero ${index + 1}">
+                            `).join('')}
                         </div>
                         <div class="team team-dire">
-                            <img class="${match.draft[5] === match.playerHero ? "player-hero" : ""}" src = "image/minimap_icons/${match.draft[5]}"></img>
-                            <img class="${match.draft[6] === match.playerHero ? "player-hero" : ""}" src = "image/minimap_icons/${match.draft[6]}"></img>
-                            <img class="${match.draft[7] === match.playerHero ? "player-hero" : ""}" src = "image/minimap_icons/${match.draft[7]}"></img>
-                            <img class="${match.draft[8] === match.playerHero ? "player-hero" : ""}" src = "image/minimap_icons/${match.draft[8]}"></img>
-                            <img class="${match.draft[9] === match.playerHero ? "player-hero" : ""}" src = "image/minimap_icons/${match.draft[9]}"></img>
+                            ${match.draft.slice(5, 10).map((hero, index) => `
+                                <img class="${hero === match.player_hero ? "player-hero" : ""}" 
+                                     alt="Hero ${index + 6}">
+                            `).join('')}
                         </div>
                     </div>
                 </td>
@@ -280,8 +282,8 @@ export default {
                     <span>${match.networth}</span>
                 </td>
                 <td class="matches-table__td match-info__kda" data-label="K/D/A">
-                    <span>${match.kills}/${match.deaths}/${match.kills}</span>
-                    <span style="display: none;">${(match.kills + match.kills) / match.deaths}</span>
+                    <span>${match.kills}/${match.deaths}/${match.assists}</span>
+                    <span style="display: none;">${(match.kills + match.assits) / match.deaths}</span>
                 </td>
                 <td class="matches-table__td match-info__gpm" valign="center"
                     data-label="GPM">
@@ -291,15 +293,11 @@ export default {
                     <span>${match.xpm}</span>
                 </td>
                 <td class="matches-table__td match-info__items" data-label="Items">
-                    <div style="display: flex; justify-content: center;">
-                        <div class="skeleton" style="width: 28px; height: 28px; margin: 2px;"></div>
-                        <div class="skeleton" style="width: 28px; height: 28px; margin: 2px;"></div>
-                        <div class="skeleton" style="width: 28px; height: 28px; margin: 2px;"></div>
-                    </div>
-                    <div style="display: flex; justify-content: center;">
-                        <div class="skeleton" style="width: 28px; height: 28px; margin: 2px;"></div>
-                        <div class="skeleton" style="width: 28px; height: 28px; margin: 2px;"></div>
-                        <div class="skeleton" style="width: 28px; height: 28px; margin: 2px;"></div>
+                    <div class="items-container">
+                        ${match.items.map((item, index) => `
+                            <img class="${!item ? "empty" : ""}" 
+                                 alt="Item ${index + 1}">
+                        `).join('')}
                     </div>
                 </td>
                 <td class="matches-table__td match-info__duration" data-label="Duration">
@@ -315,6 +313,22 @@ export default {
                 </tr>
             `;
             this.matchesTable.append(current_tr);
+
+            this.loadImageWithSkeleton(
+                current_tr.querySelector('.match-info__hero img'),
+                `${HEROES_ICONS_URL}/${match.player_hero.icon}`, 32, 32
+            );
+    
+            current_tr.querySelectorAll('.draft img').forEach((img, index) => {
+                this.loadImageWithSkeleton(img, `${HEROES_ICONS_URL}/${match.draft[index].icon}`);
+            });
+    
+            current_tr.querySelectorAll('.match-info__items img').forEach((img, index) => {
+                if (match.items[index]) {
+                    this.loadImageWithSkeleton(img, `${ITEMS_ICONS_URL}/${match.items[index].icon}`, 34, 24);
+                }
+            });
+
             iterator++;
         }
     },
@@ -334,8 +348,8 @@ export default {
                    <span>${iterator + 1}</span>
                 </td>
                 <td class="heroes-table__td heroes-info__hero" data-label="Hero">
-                    <a href="https://dota2.fandom.com/wiki/${hero.hero.slice(0, -18)}" target="blank">
-                        <img src="image/minimap_icons/${hero.hero}"></img>
+                    <a href="https://dota2.fandom.com/wiki/${hero.hero.localized_name}" target="blank">
+                        <img alt="${hero.hero.localized_name}"></img>
                     </a>
                 </td>
                 <td class="heroes-table__td heroes-info__matches" data-label="Matches">
@@ -367,11 +381,11 @@ export default {
                 </td>
             </tr>`;
 
-            /*if (Math.round((hero.wins / hero.games * 100)) >= 60) {
-                text.classList.add('_text-succes');
-            } else if (Math.round((hero.wins / hero.games * 100)) < 40) {
-                text.classList.add('_text-danger');
-            } */
+            this.loadImageWithSkeleton(
+                current_tr.querySelector('.heroes-info__hero img'),
+                `${HEROES_ICONS_URL}/${hero.hero.icon}`, 32, 32
+            );
+
             heroesTable.append(current_tr);
             iterator++;
         }

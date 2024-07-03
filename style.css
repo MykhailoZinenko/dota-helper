@@ -234,7 +234,7 @@ body {
     width: 35%;
     display: flex;
     flex-direction: column;
-    justify-content: left;
+    justify-content: center;
     padding: 2.5rem;
     height: -webkit-fill-available;
 }
@@ -403,13 +403,33 @@ body {
 }
 
 .team img {
-    padding: 2px;
     width: 24px;
     height: 24px;
 }
 
 .player-hero {
     filter: drop-shadow(rgb(255, 255, 255) 1px 0 0px) drop-shadow(rgb(255, 255, 255) -1px 0 0px) drop-shadow(rgb(255, 255, 255) 0 1px 0px) drop-shadow(rgb(255, 255, 255) 0 -1px 0px);
+}
+
+.items-container {
+    display: grid;
+    width: auto;
+    justify-content: center;
+    grid-template-columns: repeat(3, max-content);
+    grid-template-rows: repeat(2, 1fr);
+}
+
+.match-info__items img {
+    width: 34px;
+    height: 24px;
+}
+
+.match-info__items img.empty {
+    display: none;
+}
+
+.team img, .match-info__items img {
+    padding: 2px;
 }
 
 .id-link {
@@ -431,7 +451,6 @@ body {
 .matches-table__tr-end {
     border-bottom: 2px solid white;
 }
-
 
 .heroes-table {
     width: 100%;
@@ -515,13 +534,15 @@ body {
 
 .footer__contact {
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
     align-items: center;
     padding-bottom: 0.5rem;
+    column-gap: 4rem;
+    row-gap: 1rem;
 }
 
 .footer__contact span {
-    padding-left: 2rem;
+    min-width: 100px;
 }
 
 .footer__about {
@@ -773,11 +794,6 @@ body {
         flex-direction: column;
         justify-content: center;
         column-gap: 1rem;
-    }
-
-    .footer__contact span {
-        padding: 0;
-        padding-top: 0.5rem;
     }
 
     .footer__about {

@@ -14,7 +14,7 @@ export default {
         view.renderHeroes(model.info.heroes);
         this.bindEvents(model.info.matches);
         this.bindMatchesSortButtons(model.info.matches);
-        this.bindHeroesSortButtons();
+        this.bindHeroesSortButtons(model.info.heroes);
         this.bindCopyMatchIdButtons();
     },
 
@@ -56,7 +56,7 @@ export default {
         view.matchesSortButtons[matchesColumnsMap.playerHero].addEventListener('click', () => {
             if (view.matchesSortButtons[matchesColumnsMap.playerHero].classList.contains('active')) return;
             view.handleSortMatches(matchesColumnsMap.playerHero);
-            const sortedRows = model.getSortedData(data, 'player_hero', '>');
+            const sortedRows = model.getSortedData(data, 'player_hero.name', '>');
             view.renderMatches(sortedRows);
         });
         view.matchesSortButtons[matchesColumnsMap.result].addEventListener('click', () => {
@@ -74,7 +74,7 @@ export default {
         view.matchesSortButtons[matchesColumnsMap.kda].addEventListener('click', () => {
             if (view.matchesSortButtons[matchesColumnsMap.kda].classList.contains('active')) return;
             view.handleSortMatches(matchesColumnsMap.kda);
-            const sortedRows = model.getSortedData(data, 'kda', '>');
+            const sortedRows = model.getSortedData(data, 'kda', '<');
             view.renderMatches(sortedRows);
         });
         view.matchesSortButtons[matchesColumnsMap.gpm].addEventListener('click', () => {
@@ -97,10 +97,10 @@ export default {
         });
     },
 
-    bindHeroesSortButtons() {
+    bindHeroesSortButtons(data) {
         const initialHeroesData = [];
 
-        for (const hero of model.info.heroes) {
+        for (const hero of data) {
             initialHeroesData.push(hero);
         }
 
@@ -118,7 +118,6 @@ export default {
             assists: 10
         };
 
-        console.log(view.heroesSortButtons);
         view.heroesSortButtons[heroesColumnsMap.initial].addEventListener('click', () => {
             if (view.heroesSortButtons[heroesColumnsMap.initial].classList.contains('active')) return;
             view.handleSortHeroes(heroesColumnsMap.initial);
@@ -127,61 +126,61 @@ export default {
         view.heroesSortButtons[heroesColumnsMap.hero].addEventListener('click', () => {
             if (view.heroesSortButtons[heroesColumnsMap.hero].classList.contains('active')) return;
             view.handleSortHeroes(heroesColumnsMap.hero);
-            const sortedRows = model.getSortedData(model.heroes, 'hero', '>');
+            const sortedRows = model.getSortedData(data, 'hero.name', '>');
             view.renderHeroes(sortedRows);
         });
         view.heroesSortButtons[heroesColumnsMap.games].addEventListener('click', () => {
             if (view.heroesSortButtons[heroesColumnsMap.games].classList.contains('active')) return;
             view.handleSortHeroes(heroesColumnsMap.games);
-            const sortedRows = model.getSortedData(model.heroes, 'games', '<');
+            const sortedRows = model.getSortedData(data, 'games', '<');
             view.renderHeroes(sortedRows);
         });
         view.heroesSortButtons[heroesColumnsMap.winrate].addEventListener('click', () => {
             if (view.heroesSortButtons[heroesColumnsMap.winrate].classList.contains('active')) return;
             view.handleSortHeroes(heroesColumnsMap.winrate);
-            const sortedRows = model.getSortedData(model.heroes, 'winrate', '<');
+            const sortedRows = model.getSortedData(data, 'winrate', '<');
             view.renderHeroes(sortedRows);
         });
         view.heroesSortButtons[heroesColumnsMap.networth].addEventListener('click', () => {
             if (view.heroesSortButtons[heroesColumnsMap.networth].classList.contains('active')) return;
             view.handleSortHeroes(heroesColumnsMap.networth);
-            const sortedRows = model.getSortedData(model.heroes, 'networth', '<');
+            const sortedRows = model.getSortedData(data, 'networth', '<');
             view.renderHeroes(sortedRows);
         });
         view.heroesSortButtons[heroesColumnsMap.lasthits].addEventListener('click', () => {
             if (view.heroesSortButtons[heroesColumnsMap.lasthits].classList.contains('active')) return;
             view.handleSortHeroes(heroesColumnsMap.lasthits);
-            const sortedRows = model.getSortedData(model.heroes, 'lasthits', '<');
+            const sortedRows = model.getSortedData(data, 'lasthits', '<');
             view.renderHeroes(sortedRows);
         });
         view.heroesSortButtons[heroesColumnsMap.gpm].addEventListener('click', () => {
             if (view.heroesSortButtons[heroesColumnsMap.gpm].classList.contains('active')) return;
             view.handleSortHeroes(heroesColumnsMap.gpm);
-            const sortedRows = model.getSortedData(model.heroes, 'gpm', '<');
+            const sortedRows = model.getSortedData(data, 'gpm', '<');
             view.renderHeroes(sortedRows);
         });
         view.heroesSortButtons[heroesColumnsMap.xpm].addEventListener('click', () => {
             if (view.heroesSortButtons[heroesColumnsMap.xpm].classList.contains('active')) return;
             view.handleSortHeroes(heroesColumnsMap.xpm);
-            const sortedRows = model.getSortedData(model.heroes, 'xpm', '<');
+            const sortedRows = model.getSortedData(data, 'xpm', '<');
             view.renderHeroes(sortedRows);
         });
         view.heroesSortButtons[heroesColumnsMap.kills].addEventListener('click', () => {
             if (view.heroesSortButtons[heroesColumnsMap.kills].classList.contains('active')) return;
             view.handleSortHeroes(heroesColumnsMap.kills);
-            const sortedRows = model.getSortedData(model.heroes, 'kills', '<');
+            const sortedRows = model.getSortedData(data, 'kills', '<');
             view.renderHeroes(sortedRows);
         });
         view.heroesSortButtons[heroesColumnsMap.deaths].addEventListener('click', () => {
             if (view.heroesSortButtons[heroesColumnsMap.deaths].classList.contains('active')) return;
             view.handleSortHeroes(heroesColumnsMap.deaths);
-            const sortedRows = model.getSortedData(model.heroes, 'deaths', '>');
+            const sortedRows = model.getSortedData(data, 'deaths', '>');
             view.renderHeroes(sortedRows);
         });
         view.heroesSortButtons[heroesColumnsMap.assists].addEventListener('click', () => {
             if (view.heroesSortButtons[heroesColumnsMap.assists].classList.contains('active')) return;
             view.handleSortHeroes(heroesColumnsMap.assists);
-            const sortedRows = model.getSortedData(model.heroes, 'assists', '<');
+            const sortedRows = model.getSortedData(data, 'assists', '<');
             view.renderHeroes(sortedRows);
         });
     },
