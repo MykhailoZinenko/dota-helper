@@ -3,29 +3,61 @@
   import { formatDuration } from "$lib/format";
 
   let { matches }: { matches: MatchRow[] } = $props();
+
+  type Key = "index" | "hero" | "result" | "networth" | "kda" | "gpm" | "xpm" | "duration";
+
+  let sortKey = $state<Key>("index");
+  let sortDir = $state(1);
+
+  function keyValue(row: MatchRow, index: number, key: Key): number | string {
+    if (key === "index") return index;
+    if (key === "hero") return row.player_hero?.localized_name ?? "";
+    if (key === "result") return row.result;
+    return row[key];
+  }
+
+  const sorted = $derived(
+    matches
+      .map((m, i) => ({ m, i }))
+      .sort((a, b) => {
+        const va = keyValue(a.m, a.i, sortKey);
+        const vb = keyValue(b.m, b.i, sortKey);
+        if (va < vb) return -sortDir;
+        if (va > vb) return sortDir;
+        return 0;
+      })
+  );
+
+  function setSort(key: Key) {
+    if (sortKey === key) sortDir = -sortDir;
+    else {
+      sortKey = key;
+      sortDir = key === "index" || key === "hero" || key === "result" ? 1 : -1;
+    }
+  }
 </script>
 
 <div class="responsive-table-container">
   <table class="data-table">
     <thead>
       <tr>
-        <th>№</th>
-        <th>Hero</th>
-        <th>Result</th>
+        <th><button class="sort-btn" class:active={sortKey === "index"} onclick={() => setSort("index")}>№</button></th>
+        <th><button class="sort-btn" class:active={sortKey === "hero"} onclick={() => setSort("hero")}>Hero</button></th>
+        <th><button class="sort-btn" class:active={sortKey === "result"} onclick={() => setSort("result")}>Result</button></th>
         <th>Draft</th>
-        <th>Networth</th>
-        <th>K/D/A</th>
-        <th>GPM</th>
-        <th>XPM</th>
+        <th><button class="sort-btn" class:active={sortKey === "networth"} onclick={() => setSort("networth")}>Networth</button></th>
+        <th><button class="sort-btn" class:active={sortKey === "kda"} onclick={() => setSort("kda")}>K/D/A</button></th>
+        <th><button class="sort-btn" class:active={sortKey === "gpm"} onclick={() => setSort("gpm")}>GPM</button></th>
+        <th><button class="sort-btn" class:active={sortKey === "xpm"} onclick={() => setSort("xpm")}>XPM</button></th>
         <th class="col-items">Items</th>
-        <th>Duration</th>
+        <th><button class="sort-btn" class:active={sortKey === "duration"} onclick={() => setSort("duration")}>Duration</button></th>
         <th>ID</th>
       </tr>
     </thead>
     <tbody>
-      {#each matches as m, i (m.match_id)}
+      {#each sorted as { m }, pos (m.match_id)}
         <tr>
-          <td data-label="№">{i + 1}</td>
+          <td data-label="№">{pos + 1}</td>
           <td data-label="Hero">
             {#if m.player_hero}
               <img class="hero" src={m.player_hero.icon} alt={m.player_hero.localized_name} />
@@ -91,12 +123,11 @@
   .hero {
     width: 32px;
     height: 32px;
-    margin: 0 auto;
   }
   .draft {
     display: flex;
-    justify-content: center;
-    gap: var(--space-2);
+    flex-direction: column;
+    align-items: center;
   }
   .team {
     display: flex;
@@ -112,8 +143,7 @@
       drop-shadow(#ffffff 0 1px 0) drop-shadow(#ffffff 0 -1px 0);
   }
   .items-container {
-    display: grid;
-    justify-content: center;
+    display: inline-grid;
     grid-template-columns: repeat(3, max-content);
   }
   .items-container img {
@@ -121,13 +151,10 @@
     height: 24px;
     padding: 2px;
   }
-  .id-link {
-    display: flex;
-    justify-content: center;
-  }
   .id-link img {
     width: 20px;
     height: 20px;
+    margin: 0 auto;
   }
 
   @media (max-width: 960px) {
@@ -139,8 +166,8 @@
     .col-items {
       display: flex;
     }
-    .draft {
-      flex-direction: column;
+    .hero {
+      margin: 0;
     }
   }
 </style>
