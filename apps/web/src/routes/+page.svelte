@@ -14,7 +14,7 @@
 
 <section class="home">
   <h1>Dota Helper</h1>
-  <p>
+  <p class="_text-muted">
     Enter a Dota 2 account ID in the search above to see recent matches,
     statistics and heroes.
   </p>
@@ -22,11 +22,15 @@
 
 <style>
   .home {
-    padding: var(--space-8) 0;
-    max-width: 42ch;
+    text-align: center;
+    padding: var(--space-5);
+    max-width: 48ch;
+    margin: 0 auto;
+  }
+  .home h1 {
+    color: var(--text-strong);
   }
   .home p {
-    color: var(--text-muted);
     line-height: 1.6;
   }
 </style>

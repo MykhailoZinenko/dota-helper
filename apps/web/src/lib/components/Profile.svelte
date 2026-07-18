@@ -8,89 +8,127 @@
   }: { profile: Profile; statistics: Statistics; accountId: string } = $props();
 </script>
 
-<div class="profile">
-  {#if profile.avatarfull}
-    <img class="profile__avatar" src={profile.avatarfull} alt="" />
-  {:else}
-    <div class="profile__avatar skeleton"></div>
-  {/if}
+<div class="profile-info">
+  <div class="profile-info__logo">
+    {#if profile.avatarfull}
+      <img src={profile.avatarfull} alt="" />
+    {:else}
+      <div class="skeleton logo-skeleton"></div>
+    {/if}
+  </div>
 
-  <div class="profile__body">
-    <div class="profile__name">
-      <span>{profile.personaname ?? `Player ${accountId}`}</span>
+  <div class="profile-content">
+    <div class="profile-buttons">
+      <span class="profile-buttons__title">
+        {profile.personaname ?? `Player ${accountId}`}
+      </span>
       {#if profile.steam_id}
         <a
-          class="profile__steam"
+          class="profile-buttons__picture"
           href={`https://steamcommunity.com/profiles/${profile.steam_id}/`}
           target="_blank"
           rel="noreferrer"
         >
-          <img src="/image/steam_icon.png" alt="Steam" height="16" />
+          <img src="/image/steam_icon.png" alt="Steam" />
         </a>
       {/if}
     </div>
 
-    <div class="profile__stats">
-      <div><span class="label">WINS</span><b class="win">{statistics.wins}</b></div>
-      <div><span class="label">LOSSES</span><b class="loss">{statistics.losses}</b></div>
-      <div>
-        <span class="label">WIN RATE</span><b class="rate"
-          >{statistics.winrate.toFixed(1)}%</b
-        >
+    <div class="stats">
+      <div class="stats__container">
+        <span class="stats__container_text-muted">WINS</span>
+        <span class="_text-succes stats__value">{statistics.wins}</span>
+      </div>
+      <div class="stats__container">
+        <span class="stats__container_text-muted">LOSES</span>
+        <span class="_text-danger stats__value">{statistics.losses}</span>
+      </div>
+      <div class="stats__container">
+        <span class="stats__container_text-muted">WIN RATE</span>
+        <span class="_text-gold stats__value">{statistics.winrate.toFixed(2)}%</span>
       </div>
     </div>
+  </div>
+
+  <div class="profile-info__rank">
+    <img src="/image/rank_image-removebg-preview.png" alt="" width="124" height="124" />
   </div>
 </div>
 
 <style>
-  .profile {
+  .profile-info {
+    background-color: var(--profile);
     display: flex;
+    justify-content: center;
     align-items: center;
-    gap: var(--space-6);
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-lg);
-    padding: var(--space-6);
+    box-shadow: var(--shadow);
+    min-height: 250px;
   }
-  .profile__avatar {
-    width: 84px;
-    height: 84px;
-    border-radius: var(--radius);
+  .profile-info__logo img,
+  .logo-skeleton {
+    border-radius: var(--radius-pill);
+    width: 124px;
+    height: 124px;
     object-fit: cover;
   }
-  .profile__name {
-    display: flex;
-    align-items: center;
-    gap: var(--space-2);
-    font-size: 1.4rem;
-    font-weight: 600;
-    color: var(--text-strong);
-    margin-bottom: var(--space-4);
-  }
-  .profile__stats {
-    display: flex;
-    gap: var(--space-8);
-  }
-  .profile__stats div {
+  .profile-content {
+    width: 35%;
     display: flex;
     flex-direction: column;
-    gap: var(--space-1);
+    justify-content: center;
+    padding: 2.5rem;
   }
-  .label {
+  .profile-buttons {
+    display: flex;
+    align-items: center;
+  }
+  .profile-buttons__title {
+    font-size: var(--fs-xl);
+    line-height: 26px;
+    padding-right: var(--space-3);
+    color: var(--text-strong);
+  }
+  .profile-buttons__picture {
+    width: 25px;
+    height: 25px;
+  }
+  .profile-buttons__picture img {
+    width: 100%;
+    height: 100%;
+  }
+  .stats {
+    padding-top: var(--space-4);
+    display: flex;
+  }
+  .stats__container {
+    display: flex;
+    flex-direction: column;
+    padding-right: var(--space-4);
+  }
+  .stats__container_text-muted {
     color: var(--text-muted);
-    font-size: 0.7rem;
-    letter-spacing: 0.05em;
+    font-size: var(--fs-sm);
   }
-  .profile__stats b {
-    font-size: 1.3rem;
+  .stats__value {
+    font-size: var(--fs-lg);
   }
-  .win {
-    color: var(--success);
+  .profile-info__rank {
+    display: flex;
+    align-items: center;
   }
-  .loss {
-    color: var(--danger);
-  }
-  .rate {
-    color: var(--gold);
+
+  @media (max-width: 768px) {
+    .profile-info {
+      flex-direction: column;
+      padding-top: var(--space-5);
+    }
+    .profile-buttons,
+    .stats {
+      justify-content: center;
+    }
+    .stats__container {
+      text-align: center;
+      padding: 0 var(--space-3);
+    }
   }
 </style>

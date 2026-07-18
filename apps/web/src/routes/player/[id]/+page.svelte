@@ -14,27 +14,25 @@
   accountId={data.accountId}
 />
 
-<section>
-  <h2>Recent matches — averages & max</h2>
+<div class="main-content content-container">
+  <h2>Stats of recently played matches (avg / max)</h2>
   <StatsGrid statistics={data.statistics} />
-</section>
 
-<section>
   <h2>Recent matches ({data.matches.length})</h2>
   <MatchesTable matches={data.matches} />
-</section>
 
-<section>
-  <h2>Heroes played</h2>
+  <h2>Recently played on heroes</h2>
   <HeroesTable heroStats={data.heroStats} />
-</section>
+</div>
 
 <style>
-  section {
-    margin-top: var(--space-8);
+  .main-content {
+    padding: 0 var(--space-5) var(--space-5);
   }
   h2 {
-    margin-bottom: var(--space-4);
-    font-size: 1.15rem;
+    text-align: center;
+    padding: var(--space-3);
+    color: var(--text-strong);
+    font-weight: 500;
   }
 </style>

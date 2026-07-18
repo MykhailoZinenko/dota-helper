@@ -5,82 +5,71 @@
   let { statistics }: { statistics: Statistics } = $props();
 
   const cells: { key: StatKey; label: string; duration?: boolean }[] = [
-    { key: "kills", label: "Kills" },
-    { key: "deaths", label: "Deaths" },
-    { key: "assists", label: "Assists" },
+    { key: "kills", label: "KILLS" },
+    { key: "deaths", label: "DEATHS" },
+    { key: "assists", label: "ASSISTS" },
     { key: "gpm", label: "GPM" },
     { key: "xpm", label: "XPM" },
-    { key: "lasthits", label: "Last Hits" },
-    { key: "heroes_damage", label: "Hero Damage" },
-    { key: "allies_heal", label: "Allies Heal" },
-    { key: "tower_damage", label: "Tower Damage" },
-    { key: "duration", label: "Duration", duration: true },
+    { key: "lasthits", label: "LASTHITS" },
+    { key: "heroes_damage", label: "HERO DAMAGE" },
+    { key: "allies_heal", label: "ALLIES HEAL" },
+    { key: "tower_damage", label: "TOWER DAMAGE" },
+    { key: "duration", label: "DURATION", duration: true },
   ];
 
-  function fmt(value: number, duration?: boolean) {
-    return duration ? formatDuration(value) : formatCompact(value);
-  }
+  const fmt = (value: number, duration?: boolean) =>
+    duration ? formatDuration(value) : formatCompact(value);
 </script>
 
-<ul class="stats">
-  {#each cells as cell}
-    <li class="stat">
-      <span class="stat__label">{cell.label}</span>
-      <div class="stat__values">
-        <span class="stat__avg">{fmt(statistics.average[cell.key], cell.duration)}</span>
-        <span class="stat__max">{fmt(statistics.max[cell.key].value, cell.duration)}</span>
-        {#if statistics.max[cell.key].hero}
-          <img
-            class="stat__hero"
-            src={statistics.max[cell.key].hero?.icon}
-            alt=""
-          />
-        {/if}
-      </div>
-    </li>
-  {/each}
-</ul>
+<div class="recently-played">
+  <ul class="recent-matches-list">
+    {#each cells as cell}
+      <li class="recent-matches-list__item">
+        <span class="_text-muted">{cell.label}</span>
+        <p>
+          {fmt(statistics.average[cell.key], cell.duration)}
+          <span class="_text-muted">{fmt(statistics.max[cell.key].value, cell.duration)}</span>
+          {#if statistics.max[cell.key].hero}
+            <img src={statistics.max[cell.key].hero?.icon} alt="" />
+          {/if}
+        </p>
+      </li>
+    {/each}
+  </ul>
+</div>
 
 <style>
-  .stats {
-    list-style: none;
+  .recently-played {
+    background-color: var(--panel-subtle);
+    padding: var(--space-4);
+    display: flex;
+    justify-content: center;
+  }
+  .recent-matches-list {
+    width: 100%;
     margin: 0;
     padding: 0;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-    gap: var(--space-3);
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 20px;
+    row-gap: 30px;
   }
-  .stat {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: var(--space-3) var(--space-4);
+  .recent-matches-list__item {
+    list-style: none;
   }
-  .stat__label {
-    display: block;
-    color: var(--text-muted);
-    font-size: 0.72rem;
-    letter-spacing: 0.05em;
-    margin-bottom: var(--space-2);
+  .recent-matches-list__item span {
+    font-size: var(--fs-sm);
   }
-  .stat__values {
+  .recent-matches-list__item p {
+    font-size: var(--fs-lg);
+    margin: 0;
+    padding-top: var(--space-2);
     display: flex;
     align-items: center;
     gap: var(--space-2);
   }
-  .stat__avg {
-    font-size: 1.25rem;
-    font-weight: 600;
-    color: var(--text-strong);
-  }
-  .stat__max {
-    color: var(--text-muted);
-    font-size: 0.85rem;
-  }
-  .stat__hero {
-    width: 24px;
-    height: 24px;
-    margin-left: auto;
-    border-radius: var(--radius-sm);
+  .recent-matches-list__item p img {
+    width: 20px;
+    height: 20px;
   }
 </style>

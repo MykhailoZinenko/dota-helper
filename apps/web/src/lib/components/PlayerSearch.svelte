@@ -31,33 +31,34 @@
 <style>
   .search {
     display: flex;
+    align-items: center;
     gap: var(--space-2);
   }
   .search__input {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    color: var(--text);
-    font-family: var(--font);
-    font-size: 0.9rem;
-    padding: var(--space-2) var(--space-3);
-    width: 180px;
-    outline: none;
-  }
-  .search__input:focus {
-    border-color: var(--panel-2);
-  }
-  .search__btn {
-    background: var(--panel-2);
+    background: rgba(255, 255, 255, 0.08);
     border: none;
     border-radius: var(--radius);
     color: var(--text-strong);
+    font: inherit;
+    letter-spacing: inherit;
+    font-size: var(--fs-sm);
+    padding: 0.4rem 0.75rem;
+    width: 160px;
+    outline: none;
+  }
+  .search__input::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+  }
+  .search__btn {
+    background: none;
+    border: none;
+    color: var(--text-strong);
+    font: inherit;
+    letter-spacing: inherit;
+    font-size: var(--fs-md);
     cursor: pointer;
-    font-family: var(--font);
-    font-weight: 600;
-    padding: var(--space-2) var(--space-4);
   }
   .search__btn:hover {
-    background: var(--panel);
+    color: var(--gold);
   }
 </style>

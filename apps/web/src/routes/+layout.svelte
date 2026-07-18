@@ -5,33 +5,97 @@
   let { children } = $props();
 </script>
 
-<header class="topbar">
-  <a href="/" class="brand">
-    <img src="/image/logo-removed-bg.png" alt="Dota Helper" height="28" />
-  </a>
-  <PlayerSearch />
-</header>
+<div class="layout">
+  <nav class="navbar">
+    <a href="/" class="navbar__logo">
+      <img src="/image/logo-removed-bg.png" alt="Dota Helper" width="120" height="30" />
+    </a>
+    <PlayerSearch />
+  </nav>
 
-<main class="content">
-  {@render children()}
-</main>
+  <main class="main">
+    {@render children()}
+  </main>
+
+  <footer class="footer">
+    <div class="content-container footer__inner">
+      <div class="footer__contact">
+        <img src="/image/logo-removed-bg.png" alt="" width="120" />
+        <span>mzinenko.work@gmail.com</span>
+      </div>
+      <hr />
+      <div class="footer__pages">
+        <a class="_text-muted" href="https://www.dotabuff.com/" target="_blank" rel="noreferrer">DOTABUFF</a>
+        <div class="divider">•</div>
+        <a class="_text-muted" href="https://dota2protracker.com/" target="_blank" rel="noreferrer">DOTA2PT</a>
+        <div class="divider">•</div>
+        <a class="_text-muted" href="https://store.steampowered.com/" target="_blank" rel="noreferrer">Steam</a>
+      </div>
+    </div>
+  </footer>
+</div>
 
 <style>
-  .topbar {
+  .layout {
+    display: grid;
+    grid-template-rows: 70px 1fr auto;
+    min-height: 100vh;
+  }
+  .navbar {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: var(--space-4);
-    padding: var(--space-3) var(--space-6);
-    border-bottom: 1px solid var(--border);
-    position: sticky;
-    top: 0;
-    background: var(--bg);
-    z-index: 10;
+    padding: 0 var(--space-3);
+    background-color: var(--nav);
+    box-shadow: var(--shadow);
+    position: relative;
+    z-index: 100;
   }
-  .content {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: var(--space-6);
+  .navbar__logo {
+    padding-top: 0.2rem;
+  }
+  .footer {
+    background-color: var(--deep);
+    padding: var(--space-4) var(--space-3) var(--space-3);
+  }
+  .footer__inner {
+    display: flex;
+    flex-direction: column;
+  }
+  .footer__contact {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    column-gap: var(--space-5);
+    padding-bottom: var(--space-2);
+  }
+  .footer hr {
+    width: 100%;
+    border: 0;
+    height: 1px;
+    background: linear-gradient(
+      to right,
+      rgba(0, 0, 0, 0),
+      rgba(255, 255, 255, 0.87),
+      rgba(0, 0, 0, 0)
+    );
+  }
+  .footer__pages {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
+  .footer__pages .divider {
+    opacity: 0.6;
+  }
+
+  @media (max-width: 610px) {
+    .footer__pages {
+      flex-direction: column;
+      gap: var(--space-2);
+    }
+    .footer__pages .divider {
+      display: none;
+    }
   }
 </style>
