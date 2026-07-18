@@ -15,6 +15,9 @@
   --gold: #c9af1d;
 
   --line: #ffffff;
+  --line-soft: rgba(255, 255, 255, 0.14);
+  --nav-hover: #1b4d6a;
+  --hover-bg: rgba(255, 255, 255, 0.06);
   --shadow: rgb(0 0 0 / 23%) 2px 2px 3px -2px;
 
   /* Typography */

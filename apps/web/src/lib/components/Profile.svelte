@@ -45,7 +45,7 @@
       </div>
       <div class="stats__container">
         <span class="stats__container_text-muted">WIN RATE</span>
-        <span class="_text-gold stats__value">{statistics.winrate.toFixed(2)}%</span>
+        <span class="_text-info stats__value">{statistics.winrate.toFixed(2)}%</span>
       </div>
     </div>
   </div>

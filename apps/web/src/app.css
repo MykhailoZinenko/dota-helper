@@ -98,6 +98,60 @@ a {
   color: var(--text-strong);
 }
 
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font: inherit;
+  letter-spacing: var(--tracking);
+  cursor: pointer;
+  padding: 0.45rem 1rem;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  color: var(--text);
+  background: transparent;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease,
+    border-color 0.15s ease;
+}
+.btn:hover {
+  color: var(--text-strong);
+}
+.btn--primary {
+  background: var(--nav);
+  color: var(--text-strong);
+}
+.btn--primary:hover {
+  background: var(--nav-hover);
+}
+.btn--ghost {
+  border-color: var(--line-soft);
+  color: var(--text-muted);
+}
+.btn--ghost:hover {
+  border-color: var(--text);
+  color: var(--text-strong);
+  background: var(--hover-bg);
+}
+
+.input {
+  font: inherit;
+  letter-spacing: var(--tracking);
+  color: var(--text-strong);
+  background: var(--deep);
+  border: 1px solid var(--line-soft);
+  border-radius: var(--radius-sm);
+  padding: 0.45rem 0.75rem;
+  outline: none;
+}
+.input::placeholder {
+  color: var(--text-muted);
+}
+.input:focus {
+  border-color: var(--nav);
+}
+
 @media (max-width: 768px) {
   .data-table thead {
     display: none;
