@@ -32,15 +32,15 @@ async function pool<T, R>(
   return results;
 }
 
-export function heroImage(name: string) {
-  return `${CDN}/heroes/${name.replace("npc_dota_hero_", "")}.png`;
+export function heroIcon(name: string) {
+  return `${CDN}/heroes/icons/${name.replace("npc_dota_hero_", "")}.png`;
 }
 
 export interface Hero {
   id: number;
   name: string;
   localized_name: string;
-  img: string;
+  icon: string;
 }
 
 export async function getHeroes(): Promise<Hero[]> {
@@ -49,7 +49,7 @@ export async function getHeroes(): Promise<Hero[]> {
     id: h.id,
     name: h.name.replace("npc_dota_hero_", ""),
     localized_name: h.localized_name,
-    img: heroImage(h.name),
+    icon: heroIcon(h.name),
   }));
 }
 

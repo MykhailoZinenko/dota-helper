@@ -142,7 +142,7 @@ export default {
                     <p class="_text-succes">
                         ${data.average.kills}
                         <span class="_text-muted">${data.max.kills.value}</span>
-                        <img src="${data.max.kills.hero.img}" alt="">
+                        <img src="${data.max.kills.hero.icon}" alt="">
                     </p>
                 </li>
                 <li class="recent-matches-list__item ">
@@ -152,7 +152,7 @@ export default {
                     <p class="_text-danger">
                         ${data.average.deaths}
                         <span class="_text-muted">${data.max.deaths.value}</span>
-                        <img src="${data.max.deaths.hero.img}" alt="">
+                        <img src="${data.max.deaths.hero.icon}" alt="">
                     </p>
                 </li>
                 <li class="recent-matches-list__item ">
@@ -162,7 +162,7 @@ export default {
                     <p>
                         ${data.average.assists}
                         <span class="_text-muted">${data.max.assists.value}</span>
-                        <img src="${data.max.assists.hero.img}" alt="">
+                        <img src="${data.max.assists.hero.icon}" alt="">
                     </p>
                 </li>
                 <li class="recent-matches-list__item ">
@@ -172,7 +172,7 @@ export default {
                     <p>
                         ${data.average.gpm > 1000 ? (data.average.gpm / 1000).toFixed(1) + 'k' : data.average.gpm}
                         <span class="_text-muted">${data.max.gpm.value > 1000 ? (data.max.gpm.value / 1000).toFixed(1) + 'k' : data.max.gpm.value}</span>
-                        <img src="${data.max.gpm.hero.img}" alt="">
+                        <img src="${data.max.gpm.hero.icon}" alt="">
                     </p>
                 </li>
                 <li class="recent-matches-list__item ">
@@ -182,7 +182,7 @@ export default {
                     <p>
                         ${data.average.xpm > 1000 ? (data.average.xpm / 1000).toFixed(1) + 'k' : data.average.xpm}
                         <span class="_text-muted">${data.max.xpm.value > 1000 ? (data.max.xpm.value / 1000).toFixed(1) + 'k' : data.max.xpm.value}</span>
-                        <img src="${data.max.xpm.hero.img}" alt="">
+                        <img src="${data.max.xpm.hero.icon}" alt="">
                     </p>
                 </li>
                 <li class="recent-matches-list__item ">
@@ -192,7 +192,7 @@ export default {
                     <p>
                         ${data.average.lasthits > 1000 ? (data.average.lasthits / 1000).toFixed(1) + 'k' : data.average.lasthits}
                         <span class="_text-muted">${data.max.lasthits.value > 1000 ? (data.max.lasthits.value / 1000).toFixed(1) + 'k' : data.max.lasthits.value}</span>
-                        <img src="${data.max.lasthits.hero.img}" alt="">
+                        <img src="${data.max.lasthits.hero.icon}" alt="">
                     </p>
                 </li>
                 <li class="recent-matches-list__item ">
@@ -202,7 +202,7 @@ export default {
                     <p>
                         ${data.average.heroes_damage > 1000 ? (data.average.heroes_damage / 1000).toFixed(1) + 'k' : data.average.heroes_damage}
                         <span class="_text-muted">${data.max.heroes_damage.value > 1000 ? (data.max.heroes_damage.value / 1000).toFixed(1) + 'k' : data.max.heroes_damage.value}</span>
-                        <img src="${data.max.heroes_damage.hero.img}" alt="">
+                        <img src="${data.max.heroes_damage.hero.icon}" alt="">
                     </p>
                 </li>
                 <li class="recent-matches-list__item ">
@@ -212,7 +212,7 @@ export default {
                     <p>
                         ${data.average.allies_heal > 1000 ? (data.average.allies_heal / 1000).toFixed(1) + 'k' : data.average.allies_heal}
                         <span class="_text-muted">${data.max.allies_heal.value > 1000 ? (data.max.allies_heal.value / 1000).toFixed(1) + 'k' : data.max.allies_heal.value}</span>
-                        <img src="${data.max.allies_heal.hero.img}" alt="">
+                        <img src="${data.max.allies_heal.hero.icon}" alt="">
                     </p>
                 </li>
                 <li class="recent-matches-list__item ">
@@ -222,7 +222,7 @@ export default {
                     <p>
                         ${data.average.tower_damage > 1000 ? (data.average.tower_damage / 1000).toFixed(1) + 'k' : data.average.tower_damage}
                         <span class="_text-muted">${data.max.tower_damage.value > 1000 ? (data.max.tower_damage.value / 1000).toFixed(1) + 'k' : data.max.tower_damage.value}</span>
-                        <img src="${data.max.tower_damage.hero.img}" alt="${data.max.tower_damage.hero.localized_name}">
+                        <img src="${data.max.tower_damage.hero.icon}" alt="${data.max.tower_damage.hero.localized_name}">
                     </p>
                 </li>
                 <li class="recent-matches-list__item ">
@@ -232,7 +232,7 @@ export default {
                     <p>
                         ${Math.floor(data.average.duration / 60) + ':' + data.average.duration % 60}
                         <span class="_text-muted">${Math.floor(data.max.duration.value / 60) + ':' + data.max.duration.value % 60}</span>
-                        <img src="${data.max.duration.hero.img}" alt="${data.max.duration.hero.localized_name}">
+                        <img src="${data.max.duration.hero.icon}" alt="${data.max.duration.hero.localized_name}">
                     </p>
                 </li>
             </ul>`;
@@ -315,16 +315,16 @@ export default {
 
             this.loadImageWithSkeleton(
                 current_tr.querySelector('.match-info__hero img'),
-                `${match.player_hero.img}`, 32, 32
+                `${match.player_hero.icon}`, 32, 32
             );
     
             current_tr.querySelectorAll('.draft img').forEach((img, index) => {
-                this.loadImageWithSkeleton(img, `${match.draft[index].img}`);
+                this.loadImageWithSkeleton(img, `${match.draft[index].icon}`);
             });
     
             current_tr.querySelectorAll('.match-info__items img').forEach((img, index) => {
                 if (match.items[index]) {
-                    this.loadImageWithSkeleton(img, `${match.items[index].img}`, 34, 24);
+                    this.loadImageWithSkeleton(img, `${match.items[index].icon}`, 34, 24);
                 }
             });
 
@@ -382,7 +382,7 @@ export default {
 
             this.loadImageWithSkeleton(
                 current_tr.querySelector('.heroes-info__hero img'),
-                `${hero.hero.img}`, 32, 32
+                `${hero.hero.icon}`, 32, 32
             );
 
             heroesTable.append(current_tr);
