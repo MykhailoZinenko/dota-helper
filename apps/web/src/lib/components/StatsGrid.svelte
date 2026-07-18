@@ -65,7 +65,7 @@
     margin: 0;
     padding-top: var(--space-2);
     display: flex;
-    align-items: center;
+    align-items: flex-end;
     gap: var(--space-2);
   }
   .recent-matches-list__item p img {
