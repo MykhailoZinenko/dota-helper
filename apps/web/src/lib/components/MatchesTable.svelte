@@ -134,8 +134,8 @@
     justify-content: center;
   }
   .team img {
-    width: 24px;
-    height: 24px;
+    width: 28px;
+    height: 28px;
     padding: 2px;
   }
   .player-hero {
@@ -147,8 +147,8 @@
     grid-template-columns: repeat(3, max-content);
   }
   .items-container img {
-    width: 34px;
-    height: 24px;
+    width: 38px;
+    height: 28px;
     padding: 2px;
   }
   .id-link img {
