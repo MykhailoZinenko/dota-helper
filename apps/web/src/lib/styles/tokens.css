@@ -1,0 +1,26 @@
+:root {
+  --bg: #0d1520;
+  --panel: #15394f;
+  --panel-2: #16405a;
+  --surface: #192023;
+  --text: #e0e5e8;
+  --text-muted: #899aa5;
+  --text-strong: #ffffff;
+  --success: #66bb6a;
+  --danger: #f14a4b;
+  --gold: #c9af1d;
+  --border: rgba(255, 255, 255, 0.08);
+
+  --font: "Space Grotesk", system-ui, -apple-system, sans-serif;
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-6: 24px;
+  --space-8: 32px;
+
+  --radius-sm: 4px;
+  --radius: 8px;
+  --radius-lg: 12px;
+}

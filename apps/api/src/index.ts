@@ -1,5 +1,4 @@
 import { Hono } from "hono";
-import { serveStatic } from "@hono/node-server/serve-static";
 import { getHeroes, getItems, getPlayerMatches, getProfile, type Hero, type Item } from "./steam";
 
 const HOUR = 60 * 60 * 1000;
@@ -37,7 +36,5 @@ app.get("/api/matches/:accountId", async (c) => {
 app.get("/api/profile/:accountId", async (c) => {
   return c.json(await getProfile(c.req.param("accountId")));
 });
-
-app.use("/*", serveStatic({ root: "../web" }));
 
 export default app;
