@@ -1,6 +1,7 @@
 import {
     PLAYER_ID,
     GET_HEROES_URL,
+    GET_ITEMS_URL,
     GET_PROFILE_URL,
     GET_MATCHES_URL,
     REQUEST_OPTIONS,
@@ -101,6 +102,14 @@ export default {
             heroesById[hero.id] = hero;
         }
 
+        const itemsManager = new DataManager(GET_ITEMS_URL, { requestOptions: REQUEST_OPTIONS });
+        const itemsList = itemsManager.cache ?? await itemsManager.fetch();
+
+        const itemsById = {};
+        for (const item of itemsList) {
+            itemsById[item.id] = item;
+        }
+
         const matchesManager = new DataManager(GET_MATCHES_URL, { requestOptions: REQUEST_OPTIONS });
         const matches = matchesManager.cache ?? await matchesManager.fetch();
 
@@ -117,6 +126,12 @@ export default {
 
             const draft = match.players.map((p) => heroesById[p.hero_id]);
 
+            const items = [];
+            for (let i = 0; i < 6; i++) {
+                const itemId = player[`item_${i}`];
+                items.push(itemId ? (itemsById[itemId] ?? null) : null);
+            }
+
             this.info.matches.push({
                 player_hero: heroesById[player.hero_id],
                 player_team: isRadiant ? 'radiant' : 'dire',
@@ -130,7 +145,7 @@ export default {
                 lasthits: player.last_hits,
                 gpm: player.gold_per_min,
                 xpm: player.xp_per_min,
-                items: [],
+                items,
                 heroes_damage: player.hero_damage,
                 tower_damage: player.tower_damage,
                 allies_heal: player.hero_healing,

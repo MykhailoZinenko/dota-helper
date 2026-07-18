@@ -1,11 +1,12 @@
 import { Hono } from "hono";
 import { serveStatic } from "@hono/node-server/serve-static";
-import { getHeroes, getPlayerMatches, getProfile, type Hero } from "./steam";
+import { getHeroes, getItems, getPlayerMatches, getProfile, type Hero, type Item } from "./steam";
 
 const HOUR = 60 * 60 * 1000;
 const MINUTE = 60 * 1000;
 
 let heroesCache: { data: Hero[]; ts: number } | null = null;
+let itemsCache: Item[] | null = null;
 const matchesCache = new Map<string, { data: unknown[]; ts: number }>();
 
 const app = new Hono();
@@ -15,6 +16,11 @@ app.get("/api/heroes", async (c) => {
     heroesCache = { data: await getHeroes(), ts: Date.now() };
   }
   return c.json(heroesCache.data);
+});
+
+app.get("/api/items", (c) => {
+  if (!itemsCache) itemsCache = getItems();
+  return c.json(itemsCache);
 });
 
 app.get("/api/matches/:accountId", async (c) => {

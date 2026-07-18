@@ -1,8 +1,10 @@
-export const PLAYER_ID = `879791715`;
+export const PLAYER_ID = `990567883`//`879791715`;
 
 export const API_BASE = ``;
 
 export const GET_HEROES_URL = `${API_BASE}/api/heroes`;
+
+export const GET_ITEMS_URL = `${API_BASE}/api/items`;
 
 export const GET_PROFILE_URL = `${API_BASE}/api/profile/${PLAYER_ID}`;
 

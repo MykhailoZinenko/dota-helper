@@ -1,3 +1,5 @@
+import itemsData from "./data/items.json";
+
 const BASE = "https://api.steampowered.com";
 const CDN = "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react";
 const STEAMID64_BASE = 76561197960265728n;
@@ -34,6 +36,25 @@ async function pool<T, R>(
 
 export function heroIcon(name: string) {
   return `${CDN}/heroes/icons/${name.replace("npc_dota_hero_", "")}.png`;
+}
+
+export function itemIcon(name: string) {
+  const slug = name.startsWith("recipe") ? "recipe" : name;
+  return `${CDN}/items/${slug}.png`;
+}
+
+export interface Item {
+  id: number;
+  name: string;
+  icon: string;
+}
+
+export function getItems(): Item[] {
+  return Object.entries(itemsData).map(([id, name]) => ({
+    id: Number(id),
+    name,
+    icon: itemIcon(name),
+  }));
 }
 
 export interface Hero {

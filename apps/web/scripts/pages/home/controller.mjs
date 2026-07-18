@@ -9,6 +9,8 @@ export default {
         view.renderProfile(profileInfo);
         view.renderStats(model.info.statistics);
         view.renderMatches(model.info.matches);
+        model.getSortedData(model.info.heroes, 'games', '<');
+        view.handleSortHeroes(2);
         view.renderHeroes(model.info.heroes);
         this.bindEvents(model.info.matches);
         this.bindMatchesSortButtons(model.info.matches);
