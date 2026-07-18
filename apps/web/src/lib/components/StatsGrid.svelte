@@ -4,9 +4,9 @@
 
   let { statistics }: { statistics: Statistics } = $props();
 
-  const cells: { key: StatKey; label: string; duration?: boolean }[] = [
-    { key: "kills", label: "KILLS" },
-    { key: "deaths", label: "DEATHS" },
+  const cells: { key: StatKey; label: string; duration?: boolean; color?: string }[] = [
+    { key: "kills", label: "KILLS", color: "_text-succes" },
+    { key: "deaths", label: "DEATHS", color: "_text-danger" },
     { key: "assists", label: "ASSISTS" },
     { key: "gpm", label: "GPM" },
     { key: "xpm", label: "XPM" },
@@ -26,7 +26,7 @@
     {#each cells as cell}
       <li class="recent-matches-list__item">
         <span class="_text-muted">{cell.label}</span>
-        <p>
+        <p class={cell.color ?? ""}>
           {fmt(statistics.average[cell.key], cell.duration)}
           <span class="_text-muted">{fmt(statistics.max[cell.key].value, cell.duration)}</span>
           {#if statistics.max[cell.key].hero}

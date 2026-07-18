@@ -64,8 +64,10 @@
             {/if}
           </td>
           <td data-label="Result">
-            <span class="_text-muted">team_{m.team}:</span>
-            <span class={m.result === "won" ? "_text-succes" : "_text-danger"}>{m.result}</span>
+            <span class="result">
+              <span class="_text-muted">team_{m.team}:</span>
+              <span class={m.result === "won" ? "_text-succes" : "_text-danger"}>{m.result}</span>
+            </span>
           </td>
           <td data-label="Draft">
             <div class="draft">
@@ -123,6 +125,10 @@
   .hero {
     width: 32px;
     height: 32px;
+  }
+  .result {
+    display: inline-flex;
+    gap: var(--space-1);
   }
   .draft {
     display: flex;
