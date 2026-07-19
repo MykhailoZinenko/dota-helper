@@ -10,3 +10,6 @@ build/
 !.env.example
 
 .DS_Store
+
+ds-bundle/
+.ds-sync/
