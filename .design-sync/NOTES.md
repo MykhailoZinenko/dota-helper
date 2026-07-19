@@ -14,3 +14,9 @@ Bundle build (regenerate `ds-bundle/` before each re-sync):
 
 Caveat: font is loaded via Google Fonts `@import`; if claude.ai/design's CSP
 blocks it, bundle Space Grotesk as a `@font-face` data URI instead.
+
+## Preview cards MUST inline styles (2026-07-19)
+`<link href="/styles.css">` does NOT resolve in claude.ai/design's card preview
+sandbox — cards render unstyled. Fix: inline the full `styles.css` into a
+`<style>` block in every card (the build step replaces the link tag). Keep
+doing this on every re-sync.
