@@ -171,8 +171,10 @@ Stray server on a port? `lsof -ti:3001,5173 | xargs kill -9`.
   {trinkets, enhancements}). `resource/localization/dota_english.txt` (+
   `abilities_english`, `items_english`) — all names/descriptions/lore (has Valve
   formatting `%var%`/`<br>` to clean up).
-- **Strategy:** grow `extract-items.py` into a full constants generator
-  *incrementally, per feature* — don't build it all speculatively.
+- **Constants generator:** the `dota` CLI (`apps/cli`) now extracts the full
+  reference set (items, neutral items, abilities incl. hero spells + talents,
+  heroes incl. stats/talents/facets) — see §5. Extend it per new reference need
+  (e.g. more localization cleanup) rather than speculatively.
 
 ### STRATZ (verified 2026-07-19)
 - Endpoint `https://api.stratz.com/graphql`. **Free.** Token via Steam login at
