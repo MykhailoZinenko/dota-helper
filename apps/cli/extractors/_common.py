@@ -3,6 +3,8 @@ import os
 import re
 import sys
 
+import vpk
+
 _TOKEN_RE = re.compile(
     r'\s+|//[^\n]*|/\*.*?\*/|"((?:[^"\\]|\\.)*)"|(\{)|(\})|([^\s{}"]+)',
     re.DOTALL,
@@ -58,3 +60,58 @@ def parse_kv(text):
         return obj
 
     return parse_object(True)
+
+
+CDN = "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react"
+DEFAULT_DOTA = os.path.expanduser(
+    "~/Library/Application Support/Steam/steamapps/common/dota 2 beta"
+)
+
+
+def dota_path():
+    return os.environ.get("DOTA_PATH", DEFAULT_DOTA)
+
+
+def open_vpk():
+    return vpk.open(os.path.join(dota_path(), "game", "dota", "pak01_dir.vpk"))
+
+
+def read_kv(pak, path):
+    text = pak.get_file(path).read().decode("utf-8", "ignore").lstrip("﻿")
+    return parse_kv(text)
+
+
+def load_loc(pak, *files):
+    tokens = {}
+    for path in files:
+        kv = read_kv(pak, path)
+        table = kv.get("lang", {}).get("Tokens", {})
+        for key, value in table.items():
+            if isinstance(value, str):
+                tokens[key.lower()] = value
+    return tokens
+
+
+def loc(tokens, *keys):
+    for key in keys:
+        value = tokens.get(key.lower())
+        if value is not None:
+            return value
+    return None
+
+
+def icon_url(kind, name):
+    return f"{CDN}/{kind}/{name}.png"
+
+
+def emit_progress(done, total, label):
+    print(json.dumps({"event": "progress", "done": done, "total": total, "label": label}), file=sys.stderr, flush=True)
+
+
+def emit_meta(**kw):
+    print(json.dumps({"event": "meta", **kw}), file=sys.stderr, flush=True)
+
+
+def dump(records):
+    json.dump(records, sys.stdout)
+    sys.stdout.flush()
