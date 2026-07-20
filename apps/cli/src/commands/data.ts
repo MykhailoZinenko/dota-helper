@@ -26,7 +26,14 @@ export function registerDataCommand(cli: CAC): void {
         return;
       }
 
-      const sink = getSink(options.target, { dryRun: Boolean(options.dryRun) });
+      let sink;
+      try {
+        sink = getSink(options.target, { dryRun: Boolean(options.dryRun) });
+      } catch (err) {
+        console.error(pc.red((err as Error).message));
+        process.exitCode = 1;
+        return;
+      }
       const rows: SummaryRow[] = [];
 
       for (const domain of selected) {
