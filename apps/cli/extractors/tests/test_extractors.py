@@ -67,6 +67,11 @@ def test_abilities_extractor_laguna():
         import pytest
         pytest.skip("VPK not present")
     records = _run("abilities.py")
-    laguna = next(r for r in records if r["key"] == "greevil_laguna_blade")
-    assert laguna["key"] == "greevil_laguna_blade"
-    assert laguna["raw"] is not None
+    laguna = next(r for r in records if r["key"] == "lina_laguna_blade")
+    assert laguna["name"] == "Laguna Blade"
+    assert laguna["shard"] is not None
+    assert laguna["hero"] == "lina"
+    talent = next(r for r in records if r["key"] == "special_bonus_unique_lina_1")
+    assert talent["is_talent"] is True
+    assert talent["hero"] == "lina"
+    assert len(records) > 1900
