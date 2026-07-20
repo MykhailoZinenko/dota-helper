@@ -56,6 +56,14 @@ Confirmed by opening `pak01_dir.vpk` with Python `vpk`:
   (trinkets) block, and an `enhancements{}` block grouped by
   global/strength/agility/intelligence/universal.
 - **Heroes** — `scripts/npc/heroes/npc_dota_hero_*.txt` + `hero_lore_english.txt`.
+- **Item build trees** — `ItemRequirements` inside each item block (e.g.
+  `item_hand_of_midas`). This is the recipe/components graph.
+- **Aghanim's upgrades** — per-ability `..._scepter_description` /
+  `..._shard_description` keys in `abilities_english.txt` (verified: Lina has
+  `..._shard_description`).
+- **Facets** — localization confirmed: `DOTA_Tooltip_Facet_<hero>_<name>` (+
+  `_Description`) in `abilities_english.txt`. Facet *definitions* live in the hero
+  KV; exact key/casing resolved at implementation time.
 - **Localization files present:** `dota_english.txt`, `abilities_english.txt`,
   `items_english.txt` (mostly cosmetics), `hero_lore_english.txt`.
 
@@ -106,22 +114,40 @@ localization, write `apps/api/src/data/<domain>.json`, emit NDJSON progress line
 to stdout for the CLI to render. Shared `_common.py` holds the VPK opener, the KV
 parser, and the localization index.
 
-**Fidelity rule:** store *raw and structured*, never lose data. Tooltip `%var%`
-substitution is **stored, not pre-rendered** — keep `description_raw` (with
-`%var%` and tags intact) *plus* the `AbilitySpecial` value map, so the future UI
-substitutes at render time. Lossless now, flexible later.
+**Fidelity rule — no hand-picked allowlist.** The extractor dumps the *entire
+parsed KV block* per entity (every field, generically KV→JSON), then enriches it
+with all matching localization strings and icon URLs. We do **not** maintain a
+curated list of "fields we keep" — that quietly drops data (an earlier draft of
+this table cut item build trees, Aghanim's upgrades, facets, cast ranges,
+aliases). Dumping the whole block guarantees nothing gameplay-relevant is lost.
 
-Domains & captured fields:
+Tooltip `%var%` substitution is **stored, not pre-rendered** — the raw
+description (with `%var%` and tags intact) plus the `AbilitySpecial` value map are
+both kept, so the future UI substitutes at render time. Lossless now, flexible
+later.
 
-| Domain → file | Captured |
+Per domain, each record is `{ ...full KV block, <localization>, icon }`:
+
+| Domain → file | Everything in its KV block, plus… |
 |---|---|
-| **items** → `items.json` | id, key, display name, cost, cooldown, mana, shop tags, quality, `special` (var→value map), `description_raw`, lore, neutral tier (if any), icon URL |
-| **neutral-items** → `neutral-items.json` | 5 tiers → trinkets + enhancements grouped by attribute; craft cost, start time, xp bonus |
-| **abilities** → `abilities.json` | key, owning hero, behavior, damage type, cooldown[], mana[], `special`, `description_raw`, lore, notes, icon URL |
-| **heroes** → `heroes.json` | id, key, display name, primary attr, roles, base stats (str/agi/int + gains, hp, armor, dmg, move speed, attack range/rate), ability keys, talents (10/15/20/25), innate, lore, icon URL |
+| **items** → `items.json` | id + key; full item block (cost, cooldown, mana, behavior, quality, shop tags, `AbilitySpecial`, **`ItemRequirements` build tree**, stock/shop flags, aliases, all other fields); localization: display name, description (raw), lore, notes, **scepter/shard**; icon URL; neutral tier if any |
+| **neutral-items** → `neutral-items.json` | full tier structure: 5 tiers → trinkets + enhancements grouped by attribute; craft cost, start time, xp bonus, options counts |
+| **abilities** → `abilities.json` | key + owning hero; full ability block (behavior, damage type, cast range/point/duration, cooldown, mana, `AbilitySpecial`, all fields); localization: display name, description (raw), lore, notes, **scepter/shard**; icon URL |
+| **heroes** → `heroes.json` | id + key; full hero block (primary attr, roles + role levels, all base stats, attack/vision/movement, **facets**, ability keys, talents 10/15/20/25, innate, all fields); localization: display name, lore, **facet strings**; icon URL |
 
-Icon URLs follow the existing CDN convention (ROADMAP §4). `items.json` keeps a
+Icon URLs follow the existing CDN convention (ROADMAP §4). `items.json` remains a
 superset of the current shape so nothing downstream breaks.
+
+### Deliberately excluded (so "everything" is honest)
+"Everything" means **all gameplay / reference data**. These non-reference blobs
+are out — call them out rather than silently skip:
+- **Cosmetics** — `items_game.txt` (~50 MB of sets/couriers/wards; ROADMAP §7
+  already flags it) and cosmetic-only entries in `items_english.txt`.
+- **Patch notes**, **novels / lore books**, **bot AI scripts**, **chat wheel /
+  emoticons**, and other `vdata/` mini-game data (Aghanim's Labyrinth, etc.).
+
+If any of these turns out to be wanted later, it's an additive extractor behind
+the same CLI — not a redesign.
 
 ---
 
