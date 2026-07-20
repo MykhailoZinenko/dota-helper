@@ -48,3 +48,15 @@ def test_items_extractor_blink():
     assert blink["name"] == "Blink Dagger"
     recipe = next(r for r in records if r["key"] == "item_recipe_magic_wand")
     assert "ItemRequirements" in recipe["raw"]
+
+
+def test_neutral_extractor_tiers():
+    if skip:
+        import pytest
+        pytest.skip("VPK not present")
+    records = _run("neutral.py")
+    tiers = sorted(r["tier"] for r in records)
+    assert tiers == [1, 2, 3, 4, 5]
+    t1 = next(r for r in records if r["tier"] == 1)
+    assert len(t1["trinkets"]) > 0
+    assert "strength" in t1["enhancements"]
