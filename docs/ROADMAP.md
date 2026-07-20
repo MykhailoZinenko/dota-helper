@@ -119,9 +119,13 @@ components, no UI library.
   - `/api/profile/:accountId` — `GetPlayerSummaries` (account_id → steamID64).
   - Steam key in gitignored `apps/api/.env` (**rotate it** — it was pasted in
     chat once).
-- **Item id→name via first-party VPK extraction:** `tools/extract-items.py`
-  (Python `vpk`) parses `scripts/npc/npc_ability_ids.txt` from the Dota VPK →
-  committed `apps/api/src/data/items.json` (594 items). Regenerate per patch.
+- **Static-data CLI (Sub-project S):** `apps/cli` (`dota`, TS/cac) wraps
+  Python `vpk` extractors to generate four committed datasets from the Dota
+  VPK — `items.json` (544), `neutral-items.json` (5), `abilities.json` (1951,
+  generic + hero spells + talents), `heroes.json` (128, stats/talents/facets)
+  — each dumping the full KV block + localization. `dota data extract`
+  (`--dry-run`, `--target`) regenerates per patch; `dota doctor` checks the
+  environment.
 - **SvelteKit frontend** (`apps/web`): player-lookup, SSR dashboard =
   Profile + StatsGrid + MatchesTable + HeroesTable, with client-side column
   sorting (matches default № , heroes default Matches↓), mobile card-collapse.
@@ -305,7 +309,8 @@ STRATZ meta dimensions → real mistake-finding & coaching. + the comparison UI.
 
 ## 12. Where to resume
 
-Next concrete step: **brainstorm Sub-project A** (database + STRATZ + first
-"you vs meta" view). Confirm the DB choice (Supabase Postgres?), design the
-schema (store user matches + cached meta), and the first comparison view. Follow
-the spec → plan → build flow; specs live in `docs/superpowers/specs/`.
+Static-data CLI shipped (Sub-project S). Next: wire item/hero tooltips in the
+UI using the new datasets, or resume Sub-project A (database + STRATZ + first
+"you vs meta" view — confirm the DB choice, design the schema, first
+comparison view). Follow the spec → plan → build flow; specs live in
+`docs/superpowers/specs/`.

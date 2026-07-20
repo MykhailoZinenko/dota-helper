@@ -50,10 +50,10 @@ export interface Item {
 }
 
 export function getItems(): Item[] {
-  return Object.entries(itemsData).map(([id, name]) => ({
-    id: Number(id),
-    name,
-    icon: itemIcon(name),
+  return (itemsData as Array<{ id: number | null; key: string; name: string | null; icon: string }>).map((item) => ({
+    id: item.id ?? 0,
+    name: item.name ?? item.key,
+    icon: item.icon,
   }));
 }
 
