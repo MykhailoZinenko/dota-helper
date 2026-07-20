@@ -16,6 +16,8 @@ export function runScript(
     const child = spawn(python, [scriptPath], {
       env: { ...process.env, ...env },
     });
+    child.stdout.setEncoding("utf8");
+    child.stderr.setEncoding("utf8");
     let stdout = "";
     let stderrBuffer = "";
     let stderrRaw = "";

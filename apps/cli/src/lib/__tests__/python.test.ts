@@ -33,4 +33,21 @@ describe("runScript", () => {
     );
     await expect(runScript("python3", script, {})).rejects.toThrow("KaBoom");
   });
+
+  it("preserves multibyte UTF-8 across stream chunks", async () => {
+    const dir = mkdtempSync(join(tmpdir(), "dota-"));
+    const script = join(dir, "utf8.py");
+    writeFileSync(
+      script,
+      [
+        "import sys, json",
+        'pad = "x" * 200000',
+        'json.dump([{"s": "\\u00e9\\u4e2d\\u6587", "pad": pad}], sys.stdout)',
+      ].join("\n"),
+    );
+    const result = await runScript("python3", script, {});
+    const rec = (result.records as Array<{ s: string }>)[0];
+    expect(rec.s).toBe("é中文");
+    expect(rec.s).not.toContain("�");
+  });
 });
