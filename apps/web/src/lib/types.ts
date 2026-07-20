@@ -9,6 +9,11 @@ export interface Item {
   id: number;
   name: string;
   icon: string;
+  cost: number | null;
+  cooldown: string | null;
+  mana: string | null;
+  description: string | null;
+  lore: string | null;
 }
 
 export interface Profile {

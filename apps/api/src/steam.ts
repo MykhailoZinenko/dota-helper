@@ -47,13 +47,55 @@ export interface Item {
   id: number;
   name: string;
   icon: string;
+  cost: number | null;
+  cooldown: string | null;
+  mana: string | null;
+  description: string | null;
+  lore: string | null;
+}
+
+interface RawItem {
+  id: number | null;
+  key: string;
+  name: string | null;
+  cost: number | null;
+  description_raw: string | null;
+  lore: string | null;
+  icon: string;
+  raw: {
+    AbilityCooldown?: string;
+    AbilityManaCost?: string;
+    AbilityValues?: Record<string, unknown>;
+  };
+}
+
+function renderTooltip(raw: string | null, values: Record<string, unknown> | undefined): string | null {
+  if (!raw) return null;
+  let out = raw.replace(/%([a-z0-9_]+)%/gi, (match, name) => {
+    const value = values?.[name];
+    return typeof value === "string" || typeof value === "number" ? String(value) : match;
+  });
+  out = out.replace(/%%/g, "%");
+  out = out.replace(/<(?!br\b|\/?h1\b)[^>]*>/gi, "");
+  out = out.replace(/<h1>(.*?)<\/h1>/gis, '<strong class="tt-title">$1</strong>');
+  return out.trim();
+}
+
+function statString(value: string | undefined): string | null {
+  if (!value || value === "0" || value === "0.0") return null;
+  return value;
 }
 
 export function getItems(): Item[] {
-  return (itemsData as Array<{ id: number | null; key: string; name: string | null; icon: string }>).map((item) => ({
+  return (itemsData as RawItem[]).map((item) => ({
     id: item.id ?? 0,
-    name: item.name ?? item.key,
+    name: item.name ?? item.key.replace(/^item_/, ""),
     icon: item.icon,
+    cost: item.cost,
+    cooldown: statString(item.raw.AbilityCooldown),
+    mana: statString(item.raw.AbilityManaCost),
+    description: renderTooltip(item.description_raw, item.raw.AbilityValues),
+    lore: item.lore,
   }));
 }
 

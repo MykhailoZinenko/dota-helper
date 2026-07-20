@@ -1,8 +1,26 @@
 <script lang="ts">
-  import type { MatchRow } from "$lib/types";
+  import type { Item, MatchRow } from "$lib/types";
   import { formatDuration } from "$lib/format";
+  import ItemPopover from "./ItemPopover.svelte";
 
   let { matches }: { matches: MatchRow[] } = $props();
+
+  let active = $state<{ item: Item; x: number; y: number; placement: "top" | "bottom" } | null>(null);
+
+  function show(item: Item, event: MouseEvent | FocusEvent) {
+    const rect = (event.currentTarget as HTMLElement).getBoundingClientRect();
+    const placement = rect.top < 260 ? "bottom" : "top";
+    active = {
+      item,
+      x: rect.left + rect.width / 2,
+      y: placement === "top" ? rect.top : rect.bottom,
+      placement,
+    };
+  }
+
+  function hide() {
+    active = null;
+  }
 
   type Key = "index" | "hero" | "result" | "networth" | "kda" | "gpm" | "xpm" | "duration";
 
@@ -95,7 +113,16 @@
             <div class="items-container">
               {#each m.items as it}
                 {#if it}
-                  <img src={it.icon} alt={it.name} />
+                  <button
+                    class="item-btn"
+                    type="button"
+                    onmouseenter={(e) => show(it, e)}
+                    onmouseleave={hide}
+                    onfocus={(e) => show(it, e)}
+                    onblur={hide}
+                  >
+                    <img src={it.icon} alt={it.name} />
+                  </button>
                 {/if}
               {/each}
             </div>
@@ -116,6 +143,12 @@
     </tbody>
   </table>
 </div>
+
+<svelte:window onscroll={hide} />
+
+{#if active}
+  <ItemPopover item={active.item} x={active.x} y={active.y} placement={active.placement} />
+{/if}
 
 <style>
   .responsive-table-container {
@@ -152,10 +185,22 @@
     display: inline-grid;
     grid-template-columns: repeat(3, max-content);
   }
+  .item-btn {
+    display: block;
+    padding: 0;
+    border: none;
+    background: none;
+    cursor: pointer;
+  }
+  .item-btn:focus-visible {
+    outline: 1px solid var(--line);
+    outline-offset: -1px;
+  }
   .items-container img {
     width: 38px;
     height: 28px;
     padding: 2px;
+    display: block;
   }
   .id-link img {
     width: 20px;
