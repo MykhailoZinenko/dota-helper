@@ -75,3 +75,20 @@ def test_abilities_extractor_laguna():
     assert talent["is_talent"] is True
     assert talent["hero"] == "lina"
     assert len(records) > 1900
+
+
+def test_heroes_extractor_count_and_lina():
+    if skip:
+        import pytest
+        pytest.skip("VPK not present")
+    records = _run("heroes.py")
+    assert len(records) >= 120
+    lina = next(r for r in records if r["key"] == "npc_dota_hero_lina")
+    assert lina["name"] == "Lina"
+    assert lina["primary_attr"].startswith("DOTA_ATTRIBUTE_")
+    assert "lina_laguna_blade" in lina["abilities"]
+    assert any(t.startswith("special_bonus") for t in lina["talents"])
+    assert len(lina["facets"]) >= 1
+    assert any(f["name"] == "Thermal Runaway" for f in lina["facets"])
+    pa = next(r for r in records if r["key"] == "npc_dota_hero_phantom_assassin")
+    assert pa["name"] == "Phantom Assassin"
