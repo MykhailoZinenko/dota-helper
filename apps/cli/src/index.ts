@@ -1,6 +1,9 @@
 import { cac } from "cac";
+import { registerDataCommand } from "./commands/data.js";
 
 const cli = cac("dota");
+
+registerDataCommand(cli);
 
 cli.help();
 cli.version("1.0.0");
