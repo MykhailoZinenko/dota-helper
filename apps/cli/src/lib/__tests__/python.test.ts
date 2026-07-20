@@ -23,4 +23,14 @@ describe("runScript", () => {
     expect(result.meta).toMatchObject({ domain: "x", records: 1 });
     expect(events).toContainEqual({ event: "progress", done: 1, total: 2, label: "a" });
   });
+
+  it("surfaces plain-text stderr on non-zero exit", async () => {
+    const dir = mkdtempSync(join(tmpdir(), "dota-"));
+    const script = join(dir, "boom.py");
+    writeFileSync(
+      script,
+      ["import sys", 'print("Traceback: KaBoom", file=sys.stderr)', "sys.exit(1)"].join("\n"),
+    );
+    await expect(runScript("python3", script, {})).rejects.toThrow("KaBoom");
+  });
 });

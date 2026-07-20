@@ -18,10 +18,12 @@ export function runScript(
     });
     let stdout = "";
     let stderrBuffer = "";
+    let stderrRaw = "";
     let meta: Record<string, unknown> = {};
 
     child.stdout.on("data", (chunk) => (stdout += chunk));
     child.stderr.on("data", (chunk) => {
+      stderrRaw += chunk;
       stderrBuffer += chunk;
       const lines = stderrBuffer.split("\n");
       stderrBuffer = lines.pop() ?? "";
@@ -40,7 +42,7 @@ export function runScript(
     child.on("error", reject);
     child.on("close", (code) => {
       if (code !== 0) {
-        reject(new Error(`extractor exited ${code}: ${stderrBuffer}`));
+        reject(new Error(`extractor exited ${code}: ${stderrRaw.trim()}`));
         return;
       }
       try {
