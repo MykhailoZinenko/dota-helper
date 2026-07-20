@@ -60,3 +60,13 @@ def test_neutral_extractor_tiers():
     t1 = next(r for r in records if r["tier"] == 1)
     assert len(t1["trinkets"]) > 0
     assert "strength" in t1["enhancements"]
+
+
+def test_abilities_extractor_laguna():
+    if skip:
+        import pytest
+        pytest.skip("VPK not present")
+    records = _run("abilities.py")
+    laguna = next(r for r in records if r["key"] == "greevil_laguna_blade")
+    assert laguna["key"] == "greevil_laguna_blade"
+    assert laguna["raw"] is not None
