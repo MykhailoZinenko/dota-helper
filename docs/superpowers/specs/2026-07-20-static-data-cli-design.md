@@ -186,13 +186,15 @@ explicitly.
 
 ## 7. Testing
 
-- **KeyValues parser** — the one piece with real logic. Vitest unit tests over
-  small fixture strings: comments, nested braces, duplicate keys, `#base`.
-- **Extractors** — integration-verified against ground truth via `--dry-run`
-  (e.g. `item_blink` cost = 2250; hero count = 127 — assert current counts). No
-  test hits the network.
-- **Sink abstraction** — unit test that `local` writes the expected file; `prod`
-  is stubbed/unimplemented (§8).
+- **KeyValues parser** (Python) — the one piece with real logic. **pytest** unit
+  tests over small fixture strings: comments, nested braces, duplicate keys,
+  `#base`.
+- **Extractors** (Python) — pytest ground-truth checks against the real VPK
+  (e.g. `item_blink` cost = 2250; hero count = 127), skipped gracefully if the
+  VPK is absent. No test hits the network.
+- **CLI lib** (TypeScript) — **Vitest** unit tests for the pure logic: the sink
+  (`local` writes the expected file; `prod` unimplemented — §8), the Δ-vs-committed
+  diff, and the python-runner's stdout/stderr split (against a fake script).
 
 ---
 
