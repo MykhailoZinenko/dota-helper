@@ -46,5 +46,5 @@ def test_items_extractor_blink():
     blink = next(r for r in records if r["key"] == "item_blink")
     assert blink["cost"] == 2250
     assert blink["name"] == "Blink Dagger"
-    midas = next(r for r in records if r["key"] == "item_hand_of_midas")
-    assert "AbilityValues" in midas["raw"]
+    recipe = next(r for r in records if r["key"] == "item_recipe_magic_wand")
+    assert "ItemRequirements" in recipe["raw"]
